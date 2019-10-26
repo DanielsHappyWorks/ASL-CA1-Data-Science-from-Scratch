@@ -9,6 +9,9 @@ class DataFrame:
             fields = line.split(delimiter)
             for i,value in enumerate(fields):
                 self.data.setdefault(headers[i].strip(),[]).append(value.strip())
+                
+    def runLinearRegression(self):
+        
     
     def printData(self):
         for row in zip(*([key] + (value) for key, value in self.data.items())):
