@@ -2,6 +2,8 @@
 Bike Sharing Dataset
 ==========================================
 
+https://archive.ics.uci.edu/ml/datasets/bike+sharing+dataset
+
 Hadi Fanaee-T
 
 Laboratory of Artificial Intelligence and Decision Support (LIAAD), University of Porto
