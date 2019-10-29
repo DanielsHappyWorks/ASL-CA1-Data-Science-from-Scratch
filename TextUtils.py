@@ -1,3 +1,8 @@
+# TO DO
+# Add comments
+# Update functions to use arrays as comparison
+
+
 class TextUtils:
 
     @staticmethod

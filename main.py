@@ -1,7 +1,7 @@
 from DataFrame import DataFrame
 from TextUtils import TextUtils
 
-#TO DO
+# TO DO
 #   Catch invalid inputs for selections
 #   catch invalid path
 #   check the given path is a csv
