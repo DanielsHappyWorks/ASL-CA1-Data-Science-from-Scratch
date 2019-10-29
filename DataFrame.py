@@ -80,9 +80,16 @@ class DataFrame:
 
     """
     Prints the headings and defined data types for the data frame
+    will print Errors data_types if there is a mismatch in data
     """
-    def print_headings(self):
-        print("TO DO")
+    def print_headings_with_type(self):
+        for i, header in enumerate(self.headers):
+            if len(self.data_types) == 0:
+                print(f"header {i}: {header.strip()} - integer")
+            elif len(self.headers) != len(self.data_types):
+                print(f"header {i}: {header.strip()} - Errors data_types")
+            else:
+                print(f"header {i}: {header.strip()} - {self.data_types[i]}")
 
     """
     Prints the data in the data frame to the console

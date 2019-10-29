@@ -67,37 +67,40 @@ def use_data_frame(data_frame):
     while True:
         print()
         print("1) print data set:")
-        print("2) run linear regression on data set and print output:")
-        print("3) run linear regression on data set and plot output:")
-        print("4) run linear regression on data set and export output:")
-        print("5) Back:")
+        print("2) print header details:")
+        print("3) run linear regression on data set and print output:")
+        print("4) run linear regression on data set and plot output:")
+        print("5) run linear regression on data set and export output:")
+        print("6) Back:")
         selection = int(input("Please select an option (0-2):"))
         if selection == 1:
             data_frame.print_data()
         elif selection == 2:
+            data_frame.print_headings_with_type()
+        elif selection == 3:
             print()
-            data_frame.print_headings()
+            data_frame.print_headings_with_type()
             x_axis = int(input("Please select the column (must be integer/float) for the x axis:"))
             y_axis = int(input("Please select the column (must be integer/float) for the y axis:"))
             data_frame.run_linear_regression(x_axis, y_axis)
             data_frame.print_linear_regression_output()
         elif selection == 4:
             print()
-            data_frame.print_headings()
+            data_frame.print_headings_with_type()
             x_axis = int(input("Please select the column (must be integer/float) for the x axis:"))
             y_axis = int(input("Please select the column (must be integer/float) for the y axis:"))
             file_name = input("Please specify a file directory and name i.e ./export.csv:")
             data_frame.run_linear_regression(x_axis, y_axis)
             data_frame.export_linear_regression_output()
-        elif selection == 3:
+        elif selection == 5:
             print()
-            data_frame.print_headings()
+            data_frame.print_headings_with_type()
             x_axis = int(input("Please select the column (integer) for the x axis:"))
             y_axis = int(input("Please select the column (integer) for the y axis:"))
             file_name = input("Please specify a file directory and name i.e ./export.csv:")
             data_frame.run_linear_regression(x_axis, y_axis)
             data_frame.export_linear_regression_output()
-        elif selection == 5:
+        elif selection == 6:
             break
 
 
