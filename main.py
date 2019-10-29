@@ -1,26 +1,24 @@
 from DataFrame import DataFrame
 from TextUtils import TextUtils
+from ExceptionUtils import ExceptionUtils
 
 # TO DO
-#   Catch invalid inputs for selections
-#   catch invalid path
-#   check the given path is a csv
 #   add linear regression for 2 columns
 #   add export for linear regression modal
 #   add ability to plot the linear regression line with values
 #   remove duplication
 #   Update comments where necessary
 #   Allow user specified delimiter
+#   Add comments
 
 
 def main():
     while True:
-        print()
-        print("Linear Regression Program:")
-        print("1) process build in data set:")
-        print("2) load in data set:")
-        print("3) Quit:")
-        selection = int(input("Please select an option (0-2):"))
+        TextUtils.print_menu(['Linear Regression Program:',
+                              '1) process build in data set:',
+                              '2) load in data set:',
+                              '3) Quit:'])
+        selection = ExceptionUtils.select_int("Please select an option (1-3):")
         if selection == 1:
             print("Opening CSV ./DataSet/hour.csv")
             data_frame = create_data_frame('./DataSet/hour.csv', ['int', 'str', 'int', 'int', 'int', 'int', 'int',
@@ -65,14 +63,13 @@ def define_data_types(data_types, headers):
 
 def use_data_frame(data_frame):
     while True:
-        print()
-        print("1) print data set:")
-        print("2) print header details:")
-        print("3) run linear regression on data set and print output:")
-        print("4) run linear regression on data set and plot output:")
-        print("5) run linear regression on data set and export output:")
-        print("6) Back:")
-        selection = int(input("Please select an option (0-2):"))
+        TextUtils.print_menu(['1) print data set:',
+                              '2) print header details:',
+                              '3) run linear regression on data set and print output:',
+                              '4) run linear regression on data set and plot output:',
+                              '5) run linear regression on data set and export output:',
+                              '6) Back:'])
+        selection = ExceptionUtils.select_int("Please select an option (1-6):")
         if selection == 1:
             data_frame.print_data()
         elif selection == 2:
@@ -80,23 +77,23 @@ def use_data_frame(data_frame):
         elif selection == 3:
             print()
             data_frame.print_headings_with_type()
-            x_axis = int(input("Please select the column (must be integer/float) for the x axis:"))
-            y_axis = int(input("Please select the column (must be integer/float) for the y axis:"))
+            x_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the x axis:")
+            y_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the y axis:")
             data_frame.run_linear_regression(x_axis, y_axis)
             data_frame.print_linear_regression_output()
         elif selection == 4:
             print()
             data_frame.print_headings_with_type()
-            x_axis = int(input("Please select the column (must be integer/float) for the x axis:"))
-            y_axis = int(input("Please select the column (must be integer/float) for the y axis:"))
+            x_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the x axis:")
+            y_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the y axis:")
             file_name = input("Please specify a file directory and name i.e ./export.csv:")
             data_frame.run_linear_regression(x_axis, y_axis)
             data_frame.export_linear_regression_output()
         elif selection == 5:
             print()
             data_frame.print_headings_with_type()
-            x_axis = int(input("Please select the column (integer) for the x axis:"))
-            y_axis = int(input("Please select the column (integer) for the y axis:"))
+            x_axis = ExceptionUtils.select_int("Please select the column (integer) for the x axis:")
+            y_axis = ExceptionUtils.select_int("Please select the column (integer) for the y axis:")
             file_name = input("Please specify a file directory and name i.e ./export.csv:")
             data_frame.run_linear_regression(x_axis, y_axis)
             data_frame.export_linear_regression_output()

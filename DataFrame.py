@@ -1,4 +1,5 @@
 from TextUtils import TextUtils
+from ExceptionUtils import ExceptionUtils
 # TO DO
 #   Add comments
 #   Add linear regression algorithm
@@ -49,12 +50,14 @@ class DataFrame:
             return False
         else:
             for i, value in enumerate(row):
-                if TextUtils.checks_int(self.data_types[i]):
-                    processed_row.append(int(value.strip()))
+                if TextUtils.checks_int(self.data_types[i]) and (ExceptionUtils.convert_to_int(value.strip()) or
+                                                                 ExceptionUtils.convert_to_int(value.strip()) == 0):
+                    processed_row.append(ExceptionUtils.convert_to_int(value.strip()))
                 elif TextUtils.checks_str(self.data_types[i]):
                     processed_row.append(value.strip())
-                elif TextUtils.checks_float(self.data_types[i]):
-                    processed_row.append(float(value.strip()))
+                elif TextUtils.checks_float(self.data_types[i]) and (ExceptionUtils.convert_to_float(value.strip()) or
+                                                                 ExceptionUtils.convert_to_float(value.strip()) == 0):
+                    processed_row.append(ExceptionUtils.convert_to_float(value.strip()))
                 else:
                     print(f"could not convert a value in the row, dropping row as data type is incorrect: {self.data_types[i]} index of value: {i}, value {value.strip()}, row: {row}")
                     return False
