@@ -3,13 +3,12 @@ from TextUtils import TextUtils
 from ExceptionUtils import ExceptionUtils
 
 # TO DO
-#   add linear regression for 2 columns
-#   add export for linear regression modal
-#   add ability to plot the linear regression line with values
 #   remove duplication
 #   Update comments where necessary
 #   Allow user specified delimiter
 #   Add comments
+#   Add more input validation
+#   Add constants
 
 
 def main():
@@ -71,7 +70,7 @@ def use_data_frame(data_frame):
                               '6) Back:'])
         selection = ExceptionUtils.select_int("Please select an option (1-6):")
         if selection == 1:
-            data_frame.print_data()
+            TextUtils.print_dict(data_frame.data)
         elif selection == 2:
             data_frame.print_headings_with_type()
         elif selection == 3:
@@ -86,9 +85,8 @@ def use_data_frame(data_frame):
             data_frame.print_headings_with_type()
             x_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the x axis:")
             y_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the y axis:")
-            file_dir = input("Please specify a file directory to export to:")
             data_frame.run_linear_regression(x_axis, y_axis)
-            data_frame.export_linear_regression_output(file_dir)
+            data_frame.export_linear_regression_output()
         elif selection == 5:
             print()
             data_frame.print_headings_with_type()

@@ -13,7 +13,7 @@ class ExceptionUtils:
             return int(input(text))
         except Exception as ex:
             print(f"Invalid Input, please try again. ERROR: {ex}")
-            ExceptionUtils.select_int(text)
+            return ExceptionUtils.select_int(text)
 
     @staticmethod
     def convert_to_int(text):

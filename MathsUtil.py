@@ -33,7 +33,7 @@ class MathsUtil:
         return new_arr
 
     @staticmethod
-    def estimate_slope(x, y):
+    def estimate_y_intercept(x, y):
         length_x = len(x)
         mean_x = MathsUtil.arr_mean(x)
         mean_y = MathsUtil.arr_mean(y)
@@ -44,9 +44,9 @@ class MathsUtil:
         return sum_cross_deviations_y_x / sum_squared_deviations_x
 
     @staticmethod
-    def estimate_y_intercept(x, y, slope):
+    def estimate_slope(x, y, y_intercept):
         mean_x = MathsUtil.arr_mean(x)
         mean_y = MathsUtil.arr_mean(y)
 
-        return mean_y - slope * mean_x
+        return mean_y - (y_intercept * mean_x)
 

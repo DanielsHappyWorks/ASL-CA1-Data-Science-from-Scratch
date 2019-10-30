@@ -2,13 +2,11 @@ from TextUtils import TextUtils
 from ExceptionUtils import ExceptionUtils
 import matplotlib.pyplot as pyplot
 from MathsUtil import MathsUtil
+from datetime import datetime
 import os
 # TO DO
-#   Add comments
-#   Add linear regression algorithm
-#   Add export for algorithm
-#   Add tests
 #   Update comments where necessary
+#   remove duplication
 
 
 class DataFrame:
@@ -27,14 +25,16 @@ class DataFrame:
         default delimiter for splitting the csv
     """
     def __init__(self, headers, data_lines, data_types=[], delimiter=','):
-        self.headers = headers
+        self.headers = []
+        for header in headers:
+            self.headers.append(header.strip())
         self.data_types = data_types
         self.delimiter = delimiter
         for line in data_lines:
             fields = self.process_row(line.split(delimiter))
             if fields:
                 for i, value in enumerate(fields):
-                    self.data.setdefault(headers[i].strip(), []).append(value)
+                    self.data.setdefault(self.headers[i], []).append(value)
 
     """
     converts a row of data to the correct data type
@@ -76,39 +76,64 @@ class DataFrame:
     def run_linear_regression(self, x_axis, y_axis):
         self.x_axis = self.headers[x_axis]
         self.y_axis = self.headers[y_axis]
-        self.slope = MathsUtil.estimate_slope(self.data[self.x_axis], self.data[self.y_axis])
-        self.y_intercept = MathsUtil.estimate_y_intercept(self.data[self.x_axis], self.data[self.y_axis], self.slope)
+        self.y_intercept = MathsUtil.estimate_y_intercept(self.data[self.x_axis], self.data[self.y_axis])
+        self.slope = MathsUtil.estimate_slope(self.data[self.x_axis], self.data[self.y_axis], self.y_intercept)
         self.predicted_y = MathsUtil.num_plus_arr(self.slope, MathsUtil.num_by_arr(self.y_intercept, self.data[self.x_axis]))
 
     """
     prints the data from the linear regression to the console
     """
     def print_linear_regression_output(self):
-        print("TO DO")
+        data_to_print = dict()
+        data_to_print[self.x_axis] = self.data[self.x_axis]
+        data_to_print[self.y_axis] = self.data[self.y_axis]
+        data_to_print["Predicted Y"] = self.predicted_y
+        TextUtils.print_dict(data_to_print)
+        print(f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
 
     """
     exports the data from the linear regression to a directory
     :param dir_name
         uses the specified directory to output files to
     """
-    def export_linear_regression_output(self, dir_name):
+    def export_linear_regression_output(self):
+        date = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
         pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="b",
-                       marker="x", s=30)
-        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r")
+                       marker="x", s=40, label='points')
+        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r", label='line')
         pyplot.xlabel(self.x_axis)
         pyplot.ylabel(self.y_axis)
-        os.makedirs(f"{dir_name}/")
-        pyplot.savefig(f"{dir_name}/{self.x_axis}_{self.y_axis}.png")
+        pyplot.title(f"{self.x_axis} vs {self.y_axis}")
+        pyplot.legend()
+        if not os.path.exists(f"./output/{date}/"):
+            os.makedirs(f"./output/{date}/")
+        pyplot.savefig(f"./output/{date}/{self.x_axis}_{self.y_axis}.png")
+
+        file = open(f"./output/{date}/{self.x_axis}_{self.y_axis}.csv", "w")
+        data_to_print = dict()
+        data_to_print[self.x_axis] = self.data[self.x_axis]
+        data_to_print[self.y_axis] = self.data[self.y_axis]
+        data_to_print["Predicted Y"] = self.predicted_y
+        for row in zip(*([key] + list(map(str, value)) for key, value in data_to_print.items())):
+            file.write(','.join(row))
+            file.write('\n')
+        file.close()
+
+        file = open(f"./output/{date}/{self.x_axis}_{self.y_axis}.txt", "w")
+        file.write(f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
+        file.close()
 
     """
     displays the output of the linear regression run on screen
     """
     def plot_linear_regression_output(self):
         pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="b",
-                       marker="x", s=30)
-        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r")
+                       marker="x", s=40, label='points')
+        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r", label='line')
         pyplot.xlabel(self.x_axis)
         pyplot.ylabel(self.y_axis)
+        pyplot.title(f"{self.x_axis} vs {self.y_axis}")
+        pyplot.legend()
         pyplot.show()
 
     """
@@ -123,10 +148,3 @@ class DataFrame:
                 print(f"header {i}: {header.strip()} - Errors data_types")
             else:
                 print(f"header {i}: {header.strip()} - {self.data_types[i]}")
-
-    """
-    Prints the data in the data frame to the console
-    """
-    def print_data(self):
-        for row in zip(*([key] + list(map(str, value)) for key, value in self.data.items())):
-            print(*row, sep='\t\t')

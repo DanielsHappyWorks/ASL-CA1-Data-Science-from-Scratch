@@ -68,3 +68,13 @@ class TextUtils:
         print()
         for item in menu_items:
             print(item)
+
+    """
+    Prints the data in the dictionary to the console
+    :param dictionary
+        takes dictionary of arrays to be printed
+    """
+    @staticmethod
+    def print_dict(dictionary):
+        for row in zip(*([key] + list(map(str, value)) for key, value in dictionary.items())):
+            print(*row, sep='\t\t')
