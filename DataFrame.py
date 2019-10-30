@@ -2,6 +2,7 @@ from TextUtils import TextUtils
 from ExceptionUtils import ExceptionUtils
 import matplotlib.pyplot as pyplot
 from MathsUtil import MathsUtil
+import os
 # TO DO
 #   Add comments
 #   Add linear regression algorithm
@@ -75,34 +76,9 @@ class DataFrame:
     def run_linear_regression(self, x_axis, y_axis):
         self.x_axis = self.headers[x_axis]
         self.y_axis = self.headers[y_axis]
-        self.slope = self.estimate_slope(self.data[self.x_axis], self.data[self.y_axis])
-        self.y_intercept = self.estimate_y_intercept(self.data[self.x_axis], self.data[self.y_axis])
+        self.slope = MathsUtil.estimate_slope(self.data[self.x_axis], self.data[self.y_axis])
+        self.y_intercept = MathsUtil.estimate_y_intercept(self.data[self.x_axis], self.data[self.y_axis], self.slope)
         self.predicted_y = MathsUtil.num_plus_arr(self.slope, MathsUtil.num_by_arr(self.y_intercept, self.data[self.x_axis]))
-
-    def estimate_slope(self, x, y):
-        length_x = len(x)
-        mean_x = MathsUtil.arr_mean(x)
-        mean_y = MathsUtil.arr_mean(y)
-
-        # calculating cross-deviation and deviation about x
-        SS_xy = MathsUtil.arr_sum(MathsUtil.arr_by_arr(y, x)) - length_x * mean_y * mean_x
-        SS_xx = MathsUtil.arr_sum(MathsUtil.arr_by_arr(x, x)) - length_x * mean_x * mean_x
-
-        # calculating regression coefficients
-        return  SS_xy / SS_xx
-
-    def estimate_y_intercept(self, x, y):
-        length_x = len(x)
-        mean_x = MathsUtil.arr_mean(x)
-        mean_y = MathsUtil.arr_mean(y)
-
-        # calculating cross-deviation and deviation about x
-        # SS_xy = MathsUtil.arr_sum(MathsUtil.arr_by_arr(y, x)) - length_x * mean_y * mean_x
-        # SS_xx = MathsUtil.arr_sum(MathsUtil.arr_by_arr(x, x)) - length_x * mean_x * mean_x
-        #
-        # b_1 = SS_xy / SS_xx
-        b_1 = self.slope
-        return mean_y - b_1 * mean_x
 
     """
     prints the data from the linear regression to the console
@@ -111,11 +87,22 @@ class DataFrame:
         print("TO DO")
 
     """
-    exports the data from the linear regression to a file
+    exports the data from the linear regression to a directory
+    :param dir_name
+        uses the specified directory to output files to
     """
-    def export_linear_regression_output(self, file_name):
-        print("TO DO")
+    def export_linear_regression_output(self, dir_name):
+        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="b",
+                       marker="x", s=30)
+        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r")
+        pyplot.xlabel(self.x_axis)
+        pyplot.ylabel(self.y_axis)
+        os.makedirs(f"{dir_name}/")
+        pyplot.savefig(f"{dir_name}/{self.x_axis}_{self.y_axis}.png")
 
+    """
+    displays the output of the linear regression run on screen
+    """
     def plot_linear_regression_output(self):
         pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="b",
                        marker="x", s=30)

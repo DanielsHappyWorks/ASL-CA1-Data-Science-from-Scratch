@@ -65,9 +65,9 @@ def use_data_frame(data_frame):
     while True:
         TextUtils.print_menu(['1) print data set:',
                               '2) print header details:',
-                              '3) run linear regression on data set and print output:',
-                              '4) run linear regression on data set and plot output:',
-                              '5) run linear regression on data set and export output:',
+                              '3) run linear regression on data set and print predicted y values:',
+                              '4) run linear regression on data set and export output:',
+                              '5) run linear regression on data set and plot output:',
                               '6) Back:'])
         selection = ExceptionUtils.select_int("Please select an option (1-6):")
         if selection == 1:
@@ -86,9 +86,9 @@ def use_data_frame(data_frame):
             data_frame.print_headings_with_type()
             x_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the x axis:")
             y_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the y axis:")
-            file_name = input("Please specify a file directory and name i.e ./export.csv:")
+            file_dir = input("Please specify a file directory to export to:")
             data_frame.run_linear_regression(x_axis, y_axis)
-            data_frame.export_linear_regression_output()
+            data_frame.export_linear_regression_output(file_dir)
         elif selection == 5:
             print()
             data_frame.print_headings_with_type()
