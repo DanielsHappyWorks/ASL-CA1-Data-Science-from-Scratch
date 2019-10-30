@@ -94,9 +94,8 @@ def use_data_frame(data_frame):
             data_frame.print_headings_with_type()
             x_axis = ExceptionUtils.select_int("Please select the column (integer) for the x axis:")
             y_axis = ExceptionUtils.select_int("Please select the column (integer) for the y axis:")
-            file_name = input("Please specify a file directory and name i.e ./export.csv:")
             data_frame.run_linear_regression(x_axis, y_axis)
-            data_frame.export_linear_regression_output()
+            data_frame.plot_linear_regression_output()
         elif selection == 6:
             break
 
