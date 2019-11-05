@@ -4,8 +4,6 @@ from GraphUtils import GraphUtils
 from MathsUtil import MathsUtil
 from datetime import datetime
 import os
-# TO DO
-#   file error handling
 
 
 class DataFrame:
@@ -96,24 +94,46 @@ class DataFrame:
     """
     def export_linear_regression_output(self, date=datetime.now().strftime('%d-%m-%Y-%H-%M-%S')):
         path = f"./output/{date}/"
-        if not os.path.exists(path):
-            os.makedirs(path)
+        try:
+            if not os.path.exists(path):
+                os.makedirs(path)
+        except Exception as ex:
+            print(f"Could't make path {path} Exception: {ex}")
 
         GraphUtils.export_graph(self.data, self.x_axis, self.y_axis, self.predicted_y, path)
+        self.export_predicted_y_to_csv(path)
+        self.export_predicted_line_data(path)
 
-        file = open(f"{path}{self.x_axis}_{self.y_axis}.csv", "w")
-        data_to_print = dict()
-        data_to_print[self.x_axis] = self.data[self.x_axis]
-        data_to_print[self.y_axis] = self.data[self.y_axis]
-        data_to_print["Predicted Y"] = self.predicted_y
-        for row in zip(*([key] + list(map(str, value)) for key, value in data_to_print.items())):
-            file.write(','.join(row))
-            file.write('\n')
-        file.close()
+    """
+        exports the slope, y intercept and formula of the predicted line 
+        :param path
+            the path the txt file should be created in
+    """
+    def export_predicted_line_data(self, path):
+        try:
+            with open(f"{path}{self.x_axis}_{self.y_axis}.txt", "w") as file:
+                file.write(
+                    f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
+        except Exception as ex:
+            print(f"Could't export predicted y values to {path}{self.x_axis}_{self.y_axis}.txt Exception: {ex}")
 
-        file = open(f"{path}{self.x_axis}_{self.y_axis}.txt", "w")
-        file.write(f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
-        file.close()
+    """
+        exports the x, y and predicted y columns to a new csv file
+        :param path
+            the path the csv file should be created in
+    """
+    def export_predicted_y_to_csv(self, path):
+        try:
+            with open(f"{path}{self.x_axis}_{self.y_axis}.csv", "w") as file:
+                data_to_print = dict()
+                data_to_print[self.x_axis] = self.data[self.x_axis]
+                data_to_print[self.y_axis] = self.data[self.y_axis]
+                data_to_print["Predicted Y"] = self.predicted_y
+                for row in zip(*([key] + list(map(str, value)) for key, value in data_to_print.items())):
+                    file.write(','.join(row))
+                    file.write('\n')
+        except Exception as ex:
+            print(f"Could't export predicted y values to {path}{self.x_axis}_{self.y_axis}.csv Exception: {ex}")
 
     """
         displays the output of the linear regression run on screen

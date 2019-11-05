@@ -34,7 +34,11 @@ class GraphUtils:
     def export_graph(data, x_axis, y_axis, predicted_y, path):
         pyplot.clf()
         GraphUtils.draw_graph(data, x_axis, y_axis, predicted_y)
-        pyplot.savefig(f"{path}{x_axis}_{y_axis}.png")
+
+        try:
+            pyplot.savefig(f"{path}{x_axis}_{y_axis}.png")
+        except Exception as ex:
+            print(f"Could't save graph to {path}{x_axis}_{y_axis}.png Exception: {ex}")
 
     """
         generic draw function to create the graphs

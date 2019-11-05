@@ -8,6 +8,7 @@ from ExceptionUtils import ExceptionUtils
 
 """
     runs when the program is started
+    This method opens the first menu in the application
 """
 def main():
     while True:
@@ -21,12 +22,14 @@ def main():
             data_frame = create_data_frame('./DataSet/hour.csv', ['int', 'str', 'int', 'int', 'int', 'int', 'int',
                                                                   'int', 'int', 'int', 'float', 'float',
                                                                   'float', 'float', 'int', 'int', 'int'])
-            use_data_frame(data_frame)
+            if data_frame:
+                use_data_frame(data_frame)
         elif selection == 2:
             path = input("Please enter the path to the file:")
             print(f"Opening CSV {path}")
             data_frame = create_data_frame(path)
-            use_data_frame(data_frame)
+            if data_frame:
+                use_data_frame(data_frame)
         elif selection == 3:
             break
 
@@ -39,12 +42,17 @@ def main():
         allows for programatical allocation of data types in the data set
     :return DataFrame
         returns a DataFrame object with the loaded data set
+        If an exception is thrown while loading the data set the returned value will be false
 """
 def create_data_frame(path, data_types=[]):
-    csv_data = open(path)
-    headers = csv_data.readline().split(",")
-    data_types = define_data_types(data_types, headers)
-    return DataFrame(headers, csv_data, data_types, ',')
+    try:
+        with open(path) as csv_data:
+            headers = csv_data.readline().split(",")
+            data_types = define_data_types(data_types, headers)
+            return DataFrame(headers, csv_data, data_types, ',')
+    except Exception as ex:
+        print(f"Could't load DataFrame at path {path} Exception: {ex}")
+        return False
 
 
 """
