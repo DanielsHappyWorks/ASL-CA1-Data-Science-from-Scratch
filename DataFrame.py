@@ -10,8 +10,6 @@ import os
 
 
 class DataFrame:
-    data = dict()
-
     """
     Constructor for the DataFrame class
     :param headers
@@ -25,6 +23,7 @@ class DataFrame:
         default delimiter for splitting the csv
     """
     def __init__(self, headers, data_lines, data_types=[], delimiter=','):
+        self.data = dict()
         self.headers = []
         for header in headers:
             self.headers.append(header.strip())
@@ -98,9 +97,10 @@ class DataFrame:
     """
     def export_linear_regression_output(self):
         date = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
-        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="b",
-                       marker="x", s=40, label='points')
-        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r", label='line')
+        pyplot.clf()
+        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="#00CED1",
+                       marker="o", s=40, label='points', alpha=0.2)
+        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="#9370DB", label='line')
         pyplot.xlabel(self.x_axis)
         pyplot.ylabel(self.y_axis)
         pyplot.title(f"{self.x_axis} vs {self.y_axis}")
@@ -127,9 +127,10 @@ class DataFrame:
     displays the output of the linear regression run on screen
     """
     def plot_linear_regression_output(self):
-        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="b",
-                       marker="x", s=40, label='points')
-        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="r", label='line')
+        pyplot.clf()
+        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="#00CED1",
+                       marker="o", s=40, label='points', alpha=0.2)
+        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="#9370DB", label='line')
         pyplot.xlabel(self.x_axis)
         pyplot.ylabel(self.y_axis)
         pyplot.title(f"{self.x_axis} vs {self.y_axis}")

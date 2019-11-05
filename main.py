@@ -3,11 +3,9 @@ from TextUtils import TextUtils
 from ExceptionUtils import ExceptionUtils
 
 # TO DO
-#   remove duplication
 #   Update comments where necessary
 #   Allow user specified delimiter
 #   Add comments
-#   Add more input validation
 #   Add constants
 
 
@@ -17,7 +15,7 @@ def main():
                               '1) process build in data set:',
                               '2) load in data set:',
                               '3) Quit:'])
-        selection = ExceptionUtils.select_int("Please select an option (1-3):")
+        selection = ExceptionUtils.select_int("Please select an option (1-3):", 1, 3)
         if selection == 1:
             print("Opening CSV ./DataSet/hour.csv")
             data_frame = create_data_frame('./DataSet/hour.csv', ['int', 'str', 'int', 'int', 'int', 'int', 'int',
@@ -68,34 +66,39 @@ def use_data_frame(data_frame):
                               '4) run linear regression on data set and export output:',
                               '5) run linear regression on data set and plot output:',
                               '6) Back:'])
-        selection = ExceptionUtils.select_int("Please select an option (1-6):")
+        selection = ExceptionUtils.select_int("Please select an option (1-6):", 1, 6)
         if selection == 1:
             TextUtils.print_dict(data_frame.data)
         elif selection == 2:
             data_frame.print_headings_with_type()
         elif selection == 3:
-            print()
-            data_frame.print_headings_with_type()
-            x_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the x axis:")
-            y_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the y axis:")
-            data_frame.run_linear_regression(x_axis, y_axis)
+            run_regression(data_frame)
             data_frame.print_linear_regression_output()
         elif selection == 4:
-            print()
-            data_frame.print_headings_with_type()
-            x_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the x axis:")
-            y_axis = ExceptionUtils.select_int("Please select the column (must be integer/float) for the y axis:")
-            data_frame.run_linear_regression(x_axis, y_axis)
+            run_regression(data_frame)
             data_frame.export_linear_regression_output()
         elif selection == 5:
-            print()
-            data_frame.print_headings_with_type()
-            x_axis = ExceptionUtils.select_int("Please select the column (integer) for the x axis:")
-            y_axis = ExceptionUtils.select_int("Please select the column (integer) for the y axis:")
-            data_frame.run_linear_regression(x_axis, y_axis)
+            run_regression(data_frame)
             data_frame.plot_linear_regression_output()
         elif selection == 6:
             break
 
 
-main()
+def run_regression(data_frame):
+    print()
+    data_frame.print_headings_with_type()
+    x_axis = get_valid_axis("Please select the column (integer) for the x axis:", data_frame)
+    y_axis = get_valid_axis("Please select the column (integer) for the y axis:", data_frame)
+    data_frame.run_linear_regression(x_axis, y_axis)
+
+
+def get_valid_axis(text, data_frame):
+    while True:
+        axis = ExceptionUtils.select_int(text, 0, len(data_frame.headers))
+        if TextUtils.checks_int(data_frame.data_types[axis]):
+            return axis
+        print(f"Invalid Selection, Please select column of type Integer")
+
+
+if __name__ == '__main__':
+    main()
