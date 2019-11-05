@@ -3,12 +3,12 @@ from TextUtils import TextUtils
 from ExceptionUtils import ExceptionUtils
 
 # TO DO
-#   Update comments where necessary
 #   Allow user specified delimiter
-#   Add comments
 #   Add constants
 
-
+"""
+    runs when the program is started
+"""
 def main():
     while True:
         TextUtils.print_menu(['Linear Regression Program:',
@@ -31,6 +31,15 @@ def main():
             break
 
 
+"""
+    creates a DataFrame object from a csv to process in Linear Regression
+    :param path
+        string defining which csv to open
+    :param data_types
+        allows for programatical allocation of data types in the data set
+    :return DataFrame
+        returns a DataFrame object with the loaded data set
+"""
 def create_data_frame(path, data_types=[]):
     csv_data = open(path)
     headers = csv_data.readline().split(",")
@@ -38,6 +47,15 @@ def create_data_frame(path, data_types=[]):
     return DataFrame(headers, csv_data, data_types, ',')
 
 
+"""
+    gets the data types for every column from the user
+    :param data_types
+        if defined will skip the process
+    :param headers
+        list of headers data is needed for
+    :returns list
+        list off data types that can be used to assign columns to correct types
+"""
 def define_data_types(data_types, headers):
     if len(data_types) == 0:
         while True:
@@ -58,6 +76,11 @@ def define_data_types(data_types, headers):
         return data_types
 
 
+"""
+    After importing a data set this function allows the user to choose how to process it
+    :param data_frame
+        defines the loaded data in ram that can be used to run Linear Regression
+"""
 def use_data_frame(data_frame):
     while True:
         TextUtils.print_menu(['1) print data set:',
@@ -84,6 +107,11 @@ def use_data_frame(data_frame):
             break
 
 
+"""
+    gets the columns to run Linear Regression on and processes the data set
+    :param data_frame
+        defines the data to run Linear Regression on
+"""
 def run_regression(data_frame):
     print()
     data_frame.print_headings_with_type()
@@ -92,6 +120,15 @@ def run_regression(data_frame):
     data_frame.run_linear_regression(x_axis, y_axis)
 
 
+"""
+    takes user inputs until they select a valid column for Linear Regression
+    :param text
+        text displayed when getting a specific axis
+    :param data_frame
+        defines the data to run Linear Regression on
+    :return int
+        returns the selected index of the column for Linear Regression
+"""
 def get_valid_axis(text, data_frame):
     while True:
         axis = ExceptionUtils.select_int(text, 0, len(data_frame.headers))
@@ -100,5 +137,8 @@ def get_valid_axis(text, data_frame):
         print(f"Invalid Selection, Please select column of type Integer")
 
 
+"""
+    only triggers main when this file is called
+"""
 if __name__ == '__main__':
     main()

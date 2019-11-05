@@ -5,22 +5,21 @@ from MathsUtil import MathsUtil
 from datetime import datetime
 import os
 # TO DO
-#   Update comments where necessary
 #   remove duplication
 
 
 class DataFrame:
     """
-    Constructor for the DataFrame class
-    :param headers
-        defines the headers for the data
-    :param data_lines 
-        data containing all of the row information, rows with invalid values will be dropped 
-    :param data_types
-        specifies what each value per header should be converted to (string, integer, float),
-        will assume all should be integers if not defined
-    :param delimiter
-        default delimiter for splitting the csv
+        Constructor for the DataFrame class
+        :param headers
+            defines the headers for the data
+        :param data_lines
+            data containing all of the row information, rows with invalid values will be dropped
+        :param data_types
+            specifies what each value per header should be converted to (string, integer, float),
+            will assume all should be integers if not defined
+        :param delimiter
+            default delimiter for splitting the csv
     """
     def __init__(self, headers, data_lines, data_types=[], delimiter=','):
         self.data = dict()
@@ -36,11 +35,11 @@ class DataFrame:
                     self.data.setdefault(self.headers[i], []).append(value)
 
     """
-    converts a row of data to the correct data type
-    :param row
-        takes the row to be processed as a specific data type
-    :returns
-        the converted row or false if the conversion failed
+        converts a row of data to the correct data type
+        :param row
+            takes the row to be processed as a specific data type
+        :returns
+            the converted row or false if the conversion failed
     """
     def process_row(self, row):
         processed_row = []
@@ -66,11 +65,11 @@ class DataFrame:
         return processed_row
 
     """
-    Runs the linear regression algorithm on 2 columns in the data set
-    :param x_axis
-        index of the column to be plotted against x
-    :param y_axis
-        index of the column to be plotted against y
+        Runs the linear regression algorithm on 2 columns in the data set
+        :param x_axis
+            index of the column to be plotted against x
+        :param y_axis
+            index of the column to be plotted against y
     """
     def run_linear_regression(self, x_axis, y_axis):
         self.x_axis = self.headers[x_axis]
@@ -80,7 +79,7 @@ class DataFrame:
         self.predicted_y = MathsUtil.num_plus_arr(self.slope, MathsUtil.num_by_arr(self.y_intercept, self.data[self.x_axis]))
 
     """
-    prints the data from the linear regression to the console
+        prints the data from the linear regression to the console
     """
     def print_linear_regression_output(self):
         data_to_print = dict()
@@ -91,9 +90,9 @@ class DataFrame:
         print(f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
 
     """
-    exports the data from the linear regression to a directory
-    :param dir_name
-        uses the specified directory to output files to
+        exports the data from the linear regression to a directory
+        :param dir_name
+            uses the specified directory to output files to
     """
     def export_linear_regression_output(self):
         date = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
@@ -124,7 +123,7 @@ class DataFrame:
         file.close()
 
     """
-    displays the output of the linear regression run on screen
+        displays the output of the linear regression run on screen
     """
     def plot_linear_regression_output(self):
         pyplot.clf()
@@ -138,8 +137,8 @@ class DataFrame:
         pyplot.show()
 
     """
-    Prints the headings and defined data types for the data frame
-    will print Errors data_types if there is a mismatch in data
+        Prints the headings and defined data types for the data frame
+        will print Errors data_types if there is a mismatch in data
     """
     def print_headings_with_type(self):
         for i, header in enumerate(self.headers):
