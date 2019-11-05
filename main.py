@@ -12,9 +12,9 @@ from ExceptionUtils import ExceptionUtils
 def main():
     while True:
         TextUtils.print_menu(['Linear Regression Program:',
-                              '1) process build in data set:',
-                              '2) load in data set:',
-                              '3) Quit:'])
+                              '1) process build in data set',
+                              '2) load in data set',
+                              '3) Quit'])
         selection = ExceptionUtils.select_int("Please select an option (1-3):", 1, 3)
         if selection == 1:
             print("Opening CSV ./DataSet/hour.csv")
@@ -83,13 +83,14 @@ def define_data_types(data_types, headers):
 """
 def use_data_frame(data_frame):
     while True:
-        TextUtils.print_menu(['1) print data set:',
-                              '2) print header details:',
-                              '3) run linear regression on data set and print predicted y values:',
-                              '4) run linear regression on data set and export output:',
-                              '5) run linear regression on data set and plot output:',
-                              '6) Back:'])
-        selection = ExceptionUtils.select_int("Please select an option (1-6):", 1, 6)
+        TextUtils.print_menu(['1) print data set',
+                              '2) print header details',
+                              '3) run linear regression on data set and print predicted y values',
+                              '4) run linear regression on data set and export output',
+                              '5) run linear regression on data set and plot output',
+                              '6) run linear regression on all columns and export (takes time)',
+                              '7) Back:'])
+        selection = ExceptionUtils.select_int("Please select an option (1-7):", 1, 7)
         if selection == 1:
             TextUtils.print_dict(data_frame.data)
         elif selection == 2:
@@ -104,6 +105,8 @@ def use_data_frame(data_frame):
             run_regression(data_frame)
             data_frame.plot_linear_regression_output()
         elif selection == 6:
+            data_frame.export_linear_regression_output_all()
+        elif selection == 7:
             break
 
 

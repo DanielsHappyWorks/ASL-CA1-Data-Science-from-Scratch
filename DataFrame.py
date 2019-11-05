@@ -1,11 +1,11 @@
 from TextUtils import TextUtils
 from ExceptionUtils import ExceptionUtils
-import matplotlib.pyplot as pyplot
+from GraphUtils import GraphUtils
 from MathsUtil import MathsUtil
 from datetime import datetime
 import os
 # TO DO
-#   remove duplication
+#   file error handling
 
 
 class DataFrame:
@@ -94,21 +94,14 @@ class DataFrame:
         :param dir_name
             uses the specified directory to output files to
     """
-    def export_linear_regression_output(self):
-        date = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
-        pyplot.clf()
-        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="#00CED1",
-                       marker="o", s=40, label='points', alpha=0.2)
-        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="#9370DB", label='line')
-        pyplot.xlabel(self.x_axis)
-        pyplot.ylabel(self.y_axis)
-        pyplot.title(f"{self.x_axis} vs {self.y_axis}")
-        pyplot.legend()
-        if not os.path.exists(f"./output/{date}/"):
-            os.makedirs(f"./output/{date}/")
-        pyplot.savefig(f"./output/{date}/{self.x_axis}_{self.y_axis}.png")
+    def export_linear_regression_output(self, date=datetime.now().strftime('%d-%m-%Y-%H-%M-%S')):
+        path = f"./output/{date}/"
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-        file = open(f"./output/{date}/{self.x_axis}_{self.y_axis}.csv", "w")
+        GraphUtils.export_graph(self.data, self.x_axis, self.y_axis, self.predicted_y, path)
+
+        file = open(f"{path}{self.x_axis}_{self.y_axis}.csv", "w")
         data_to_print = dict()
         data_to_print[self.x_axis] = self.data[self.x_axis]
         data_to_print[self.y_axis] = self.data[self.y_axis]
@@ -118,7 +111,7 @@ class DataFrame:
             file.write('\n')
         file.close()
 
-        file = open(f"./output/{date}/{self.x_axis}_{self.y_axis}.txt", "w")
+        file = open(f"{path}{self.x_axis}_{self.y_axis}.txt", "w")
         file.write(f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
         file.close()
 
@@ -126,15 +119,19 @@ class DataFrame:
         displays the output of the linear regression run on screen
     """
     def plot_linear_regression_output(self):
-        pyplot.clf()
-        pyplot.scatter(self.data[self.x_axis], self.data[self.y_axis], color="#00CED1",
-                       marker="o", s=40, label='points', alpha=0.2)
-        pyplot.plot(self.data[self.x_axis], self.predicted_y, color="#9370DB", label='line')
-        pyplot.xlabel(self.x_axis)
-        pyplot.ylabel(self.y_axis)
-        pyplot.title(f"{self.x_axis} vs {self.y_axis}")
-        pyplot.legend()
-        pyplot.show()
+        GraphUtils.show_graph(self.data, self.x_axis, self.y_axis, self.predicted_y)
+
+    """
+        export all combinations of Linear Regression in one go
+    """
+    def export_linear_regression_output_all(self):
+        date = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
+        for i, header1 in enumerate(self.headers):
+            for j, header2 in enumerate(self.headers):
+                if not TextUtils.checks_str(self.data_types[i]) and not TextUtils.checks_str(self.data_types[j]):
+                    self.run_linear_regression(i, j)
+                    self.export_linear_regression_output(date)
+                    print(f"exported {header1}_{header2}")
 
     """
         Prints the headings and defined data types for the data frame
@@ -143,8 +140,8 @@ class DataFrame:
     def print_headings_with_type(self):
         for i, header in enumerate(self.headers):
             if len(self.data_types) == 0:
-                print(f"header {i}: {header.strip()} - integer")
+                print(f"header {i}: {header} - integer")
             elif len(self.headers) != len(self.data_types):
-                print(f"header {i}: {header.strip()} - Errors data_types")
+                print(f"header {i}: {header} - Errors data_types")
             else:
-                print(f"header {i}: {header.strip()} - {self.data_types[i]}")
+                print(f"header {i}: {header} - {self.data_types[i]}")

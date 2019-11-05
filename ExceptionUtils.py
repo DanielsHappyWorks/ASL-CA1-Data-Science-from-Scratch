@@ -20,11 +20,9 @@ class ExceptionUtils:
     def select_int(text, low, high):
         try:
             selected_int = int(input(text))
-            if selected_int < low:
-                raise Exception(f'input was {selected_int} < {low}')
-            if selected_int > high:
-                raise Exception(f'input was {selected_int} > {high}')
-            return selected_int
+            if high >= selected_int >= low:
+                return selected_int
+            raise Exception(f'input {selected_int} was not in range {low}-{high}')
         except Exception as ex:
             print(f"Invalid Input, please try again. ERROR: {ex}")
             return ExceptionUtils.select_int(text, low, high)
