@@ -4,6 +4,6 @@ Select one or more data sets and design, implement, test and document a Python p
 The selected Data Set is in the DataSet Directory.
 For the purpose of this CA the hour.csv file will be used.
 The file contains information on bike sharing counts aggregated on hourly basis. Records: 17379 hours
-For more information on the DataSet check the Readme in the Data Set Directory.
+For more information on the DataSet check the Readme in the input Directory.
 
 The Plagarism and Assigmnet documents can be found in the Documents directory.

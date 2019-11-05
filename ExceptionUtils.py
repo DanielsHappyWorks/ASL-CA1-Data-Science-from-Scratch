@@ -1,9 +1,3 @@
-# TO DO
-#   Add handling for FileIO
-#       catch invalid path/file
-#       check the given path is a csv
-
-
 class ExceptionUtils:
     """
         gets the next input and validates its an integer between a certain range. If it fails it tries again.

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as pyplot
+import constant
 
 
 class GraphUtils:
@@ -53,9 +54,9 @@ class GraphUtils:
     """
     @staticmethod
     def draw_graph(data, x_axis, y_axis, predicted_y):
-        pyplot.scatter(data[x_axis], data[y_axis], color="#00CED1",
-                       marker="o", s=40, label='points', alpha=0.2)
-        pyplot.plot(data[x_axis], predicted_y, color="#9370DB", label='line')
+        pyplot.scatter(data[x_axis], data[y_axis], color=constant.SCATTER_COLOUR, marker=constant.SCATTER_MARKER,
+                       s=constant.SCATTER_SIZE, label=constant.SCATTER_LABEL, alpha=constant.SCATTER_ALPHA)
+        pyplot.plot(data[x_axis], predicted_y, color=constant.PLOT_COLOUR, label=constant.PLOT_LABEL)
         pyplot.xlabel(x_axis)
         pyplot.ylabel(y_axis)
         pyplot.title(f"{x_axis} vs {y_axis}")

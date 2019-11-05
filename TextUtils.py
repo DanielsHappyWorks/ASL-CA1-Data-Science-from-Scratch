@@ -1,3 +1,6 @@
+import constant
+
+
 class TextUtils:
     """
         checks if a string contains values yes or y
@@ -6,7 +9,7 @@ class TextUtils:
     """
     @staticmethod
     def checks_yes(value):
-        return TextUtils.checks_text_in_array(value, ["y", "yes"])
+        return TextUtils.checks_text_in_array(value, constant.CHECK_YES)
 
     """
         checks if a string contains values no or n
@@ -15,7 +18,7 @@ class TextUtils:
     """
     @staticmethod
     def checks_no(value):
-        return TextUtils.checks_text_in_array(value, ["n", "no"])
+        return TextUtils.checks_text_in_array(value, constant.CHECK_NO)
 
     """
         checks if a string contains values i, int or integer
@@ -24,7 +27,7 @@ class TextUtils:
     """
     @staticmethod
     def checks_int(value):
-        return TextUtils.checks_text_in_array(value, ["i", "int", "integer"])
+        return TextUtils.checks_text_in_array(value, constant.CHECK_INT)
 
     """
         checks if a string contains values f or float
@@ -33,7 +36,7 @@ class TextUtils:
     """
     @staticmethod
     def checks_float(value):
-        return TextUtils.checks_text_in_array(value, ["f", "float"])
+        return TextUtils.checks_text_in_array(value, constant.CHECK_FLOAT)
 
     """
         checks if a string contains values s, str or string
@@ -42,7 +45,7 @@ class TextUtils:
     """
     @staticmethod
     def checks_str(value):
-        return TextUtils.checks_text_in_array(value, ["s", "str", "string"])
+        return TextUtils.checks_text_in_array(value, constant.CHECK_STR)
 
     """
         checks if a string.lower() is present in an array

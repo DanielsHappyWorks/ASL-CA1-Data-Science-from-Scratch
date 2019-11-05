@@ -4,6 +4,7 @@ from GraphUtils import GraphUtils
 from MathsUtil import MathsUtil
 from datetime import datetime
 import os
+import constant
 
 
 class DataFrame:
@@ -83,7 +84,7 @@ class DataFrame:
         data_to_print = dict()
         data_to_print[self.x_axis] = self.data[self.x_axis]
         data_to_print[self.y_axis] = self.data[self.y_axis]
-        data_to_print["Predicted Y"] = self.predicted_y
+        data_to_print[constant.PREDICTION_EXPORT_COL] = self.predicted_y
         TextUtils.print_dict(data_to_print)
         print(f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
 
@@ -92,7 +93,7 @@ class DataFrame:
         :param dir_name
             uses the specified directory to output files to
     """
-    def export_linear_regression_output(self, date=datetime.now().strftime('%d-%m-%Y-%H-%M-%S')):
+    def export_linear_regression_output(self, date=datetime.now().strftime(constant.DATE_FOTMAT)):
         path = f"./output/{date}/"
         try:
             if not os.path.exists(path):
@@ -128,7 +129,7 @@ class DataFrame:
                 data_to_print = dict()
                 data_to_print[self.x_axis] = self.data[self.x_axis]
                 data_to_print[self.y_axis] = self.data[self.y_axis]
-                data_to_print["Predicted Y"] = self.predicted_y
+                data_to_print[constant.PREDICTION_EXPORT_COL] = self.predicted_y
                 for row in zip(*([key] + list(map(str, value)) for key, value in data_to_print.items())):
                     file.write(','.join(row))
                     file.write('\n')
@@ -145,10 +146,10 @@ class DataFrame:
         export all combinations of Linear Regression in one go
     """
     def export_linear_regression_output_all(self):
-        date = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
+        date = datetime.now().strftime(constant.DATE_FOTMAT)
         for i, header1 in enumerate(self.headers):
             for j, header2 in enumerate(self.headers):
-                if not TextUtils.checks_str(self.data_types[i]) and not TextUtils.checks_str(self.data_types[j]):
+                if len(self.data_types) == 0 or (not TextUtils.checks_str(self.data_types[i]) and not TextUtils.checks_str(self.data_types[j])):
                     self.run_linear_regression(i, j)
                     self.export_linear_regression_output(date)
                     print(f"exported {header1}_{header2}")
