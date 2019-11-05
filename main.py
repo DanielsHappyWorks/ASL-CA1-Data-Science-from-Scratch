@@ -1,6 +1,6 @@
 from DataFrame import DataFrame
-from TextUtils import TextUtils
-from ExceptionUtils import ExceptionUtils
+from Utils.TextUtils import TextUtils
+from Utils.ExceptionUtils import ExceptionUtils
 import constant
 
 """
