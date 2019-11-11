@@ -10,20 +10,12 @@ class ExceptionUtilsTests(unittest.TestCase):
         Tests all of the edge cases for selecting out of a range get returned properly
     """
     def test_select_int_test_valid(self):
-        mock.builtins.input = lambda _: "1"
+        self.mock_input('1')
         self.assertEqual(ExceptionUtils.select_int("Input Question", 1, 10), 1)
-        mock.builtins.input = lambda _: "5"
+        self.mock_input('5')
         self.assertEqual(ExceptionUtils.select_int("Input Question", 1, 10), 5)
-        mock.builtins.input = lambda _: "10"
+        self.mock_input('10')
         self.assertEqual(ExceptionUtils.select_int("Input Question", 1, 10), 10)
-
-    """
-        Tests invalid range is handled gracefully
-    """
-    def test_select_int_test_valid(self):
-        mock.builtins.input = lambda _: "-234"
-        self.assert_contains_stdout_and_return(ExceptionUtils.select_int,
-                                               "Invalid Input, please try again. ERROR", "Input Question", 1, 10)
 
     """
         checks positive and negative integers are converted correctly from strings
@@ -68,7 +60,7 @@ class ExceptionUtilsTests(unittest.TestCase):
     """
         checks positive and negative floats are converted correctly from strings to floats
     """
-    def test_convert_to_float_with_int_as_string(self):
+    def test_convert_to_float_with_float_as_string(self):
         self.assertEqual(ExceptionUtils.convert_to_float("134.42"), 134.42)
         self.assertEqual(ExceptionUtils.convert_to_float("-23.689"), -23.689)
         self.assertEqual(ExceptionUtils.convert_to_float("0.123456789"), 0.123456789)
@@ -77,7 +69,7 @@ class ExceptionUtilsTests(unittest.TestCase):
         checks strings display an error and return false 
         so the program can handle incorrect conversions gracefully
     """
-    def test_convert_to_int_with_string(self):
+    def test_convert_to_float_with_string(self):
         self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
                                                                 "Invalid Float Conversion on value", "str"))
         self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
@@ -113,8 +105,11 @@ class ExceptionUtilsTests(unittest.TestCase):
         self.assertTrue(expected in actual.getvalue())
         return output
 
-    def user_inp(self, strin):
-        sys.__stdin__
+    """
+        Mocks the next stdin input
+    """
+    def mock_input(self, user_input):
+        mock.builtins.input = lambda _: user_input
 
 
 if __name__ == '__main__':
