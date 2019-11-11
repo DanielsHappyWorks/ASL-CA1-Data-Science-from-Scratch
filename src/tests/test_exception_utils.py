@@ -1,5 +1,5 @@
-from src.Utils.ExceptionUtils import ExceptionUtils
-from src.tests.TestHelpers.StdInOutHelper import StdInOutHelper
+from src.utils.exception_utils import ExceptionUtils
+from src.tests.TestHelpers.std_in_out_helper import StdInOutHelper
 import unittest
 
 

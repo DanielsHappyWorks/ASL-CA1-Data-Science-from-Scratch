@@ -20,14 +20,14 @@ INVALID_YES_NO = "please enter a valid input! (y, yes, n, no)"
 GET_AXIS_X = "Please select the column (integer) for the x axis:"
 GET_AXIS_Y = "Please select the column (integer) for the y axis:"
 
-# TextUtils.py
+# text_utils.py
 CHECK_YES = ["y", "yes"]
 CHECK_NO = ["n", "no"]
 CHECK_INT = ["i", "int", "integer"]
 CHECK_STR = ["s", "str", "string"]
 CHECK_FLOAT = ["f", "float"]
 
-# GraphUtils.py
+# graph_utils.py
 SCATTER_COLOUR = "#00CED1"
 SCATTER_MARKER = "o"
 SCATTER_SIZE = 40

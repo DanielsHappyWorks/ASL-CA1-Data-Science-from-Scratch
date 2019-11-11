@@ -1,7 +1,7 @@
-from src.Utils.TextUtils import TextUtils
-from src.Utils.ExceptionUtils import ExceptionUtils
-from src.Utils.GraphUtils import GraphUtils
-from src.Utils.MathsUtil import MathsUtil
+from src.utils.text_utils import TextUtils
+from src.utils.exception_utils import ExceptionUtils
+from src.utils.graph_utils import GraphUtils
+from src.utils.maths_util import MathsUtil
 import src.constant as constant
 from datetime import datetime
 import os

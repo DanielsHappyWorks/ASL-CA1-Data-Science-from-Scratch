@@ -27,11 +27,35 @@ class StdInOutHelper:
         elif param1:
             output = func(param1)
         else:
-            output = func(param1)
+            output = func()
         sys.stdout = sys.__stdout__
-        print(f"{expected}: {actual.getvalue()}")
         assert expected in actual.getvalue()
         return output
+
+    """
+        Redirects stdout (print statements) to a variable, runs a function and 
+        returns anything what was printed to console
+        :param func
+            function to be run between output redirection
+        :param param
+            parameter passed into the function
+        :return output
+            returns the output of all print() statements
+    """
+    @staticmethod
+    def get_std_output_when_running_function(func, param1=None, param2=None, param3=None):
+        actual = io.StringIO()
+        sys.stdout = actual
+        if param3:
+            func(param1, param2, param3)
+        elif param2:
+            func(param1, param2)
+        elif param1:
+            func(param1)
+        else:
+            func()
+        sys.stdout = sys.__stdout__
+        return actual.getvalue()
 
     """
         Mocks the next stdin input

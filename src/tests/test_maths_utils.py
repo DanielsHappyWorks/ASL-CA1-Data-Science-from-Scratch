@@ -1,4 +1,4 @@
-from src.Utils.MathsUtil import MathsUtil
+from src.utils.maths_util import MathsUtil
 import unittest
 
 
