@@ -1,4 +1,4 @@
-from src.DataFrame import DataFrame
+from src.data_frame import DataFrame
 from src.utils.text_utils import TextUtils
 from src.utils.exception_utils import ExceptionUtils
 import src.constant as constant

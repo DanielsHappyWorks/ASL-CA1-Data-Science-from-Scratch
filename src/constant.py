@@ -36,6 +36,6 @@ SCATTER_ALPHA = 0.2
 PLOT_COLOUR = "#9370DB"
 PLOT_LABEL = "line"
 
-# DataFrame.py
+# data_frame.py
 DATE_FOTMAT = '%d-%m-%Y-%H-%M-%S'
 PREDICTION_EXPORT_COL = "Predicted Y"
