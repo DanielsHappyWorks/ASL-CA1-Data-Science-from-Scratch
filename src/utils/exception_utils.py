@@ -34,7 +34,7 @@ class ExceptionUtils:
             return int(text)
         except Exception as ex:
             print(f"Invalid Integer Conversion on value {text}. ERROR: {ex}")
-            return False
+            return None
 
     """
         converts text to float.
@@ -49,4 +49,4 @@ class ExceptionUtils:
             return float(text)
         except Exception as ex:
             print(f"Invalid Float Conversion on value {text}. ERROR: {ex}")
-            return False
+            return None

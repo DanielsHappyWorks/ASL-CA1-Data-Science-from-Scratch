@@ -2,7 +2,7 @@ from src.utils.maths_util import MathsUtil
 import unittest
 
 
-class ExceptionUtilsTests(unittest.TestCase):
+class MathsUtilsTests(unittest.TestCase):
     """
         Tests that the list is added correctly with positive, negative anf floating point numbers
     """

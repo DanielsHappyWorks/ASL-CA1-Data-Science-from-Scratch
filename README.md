@@ -7,3 +7,5 @@ The file contains information on bike sharing counts aggregated on hourly basis.
 For more information on the DataSet check the Readme in the input Directory.
 
 The Plagarism and Assigmnet documents can be found in the Documents directory.
+
+Tests need to be tun from the src/test directory using pytest

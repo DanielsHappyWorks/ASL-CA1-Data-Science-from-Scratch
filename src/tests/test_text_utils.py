@@ -3,7 +3,7 @@ from src.tests.TestHelpers.std_in_out_helper import StdInOutHelper
 import unittest
 
 
-class ExceptionUtilsTests(unittest.TestCase):
+class TextUtilsTests(unittest.TestCase):
     """
         Tests check if different forms of yes returns true
     """
@@ -123,6 +123,7 @@ class ExceptionUtilsTests(unittest.TestCase):
     def check_invalid_string(self, func, list_to_check):
         for str_to_check in list_to_check:
             self.assertEqual(func(str_to_check), False)
+
 
 if __name__ == '__main__':
     unittest.main()
