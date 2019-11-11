@@ -29,11 +29,14 @@ class ExceptionUtilsTests(unittest.TestCase):
     """
     def test_convert_to_int_with_float_as_string(self):
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
-                                                                "Invalid Integer Conversion on value", "12.0"))
+                                                                          "Invalid Integer Conversion on value",
+                                                                          "12.0"))
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
-                                                                "Invalid Integer Conversion on value", "0.12"))
+                                                                          "Invalid Integer Conversion on value",
+                                                                          "0.12"))
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
-                                                                "Invalid Integer Conversion on value", "-54.26"))
+                                                                          "Invalid Integer Conversion on value",
+                                                                          "-54.26"))
 
     """
         checks strings display an error and return false 
@@ -41,11 +44,13 @@ class ExceptionUtilsTests(unittest.TestCase):
     """
     def test_convert_to_int_with_string(self):
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
-                                                                "Invalid Integer Conversion on value", "str"))
+                                                                          "Invalid Integer Conversion on value", "str"))
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
-                                                                "Invalid Integer Conversion on value", "5we4r-3"))
+                                                                          "Invalid Integer Conversion on value",
+                                                                          "5we4r-3"))
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
-                                                                "Invalid Integer Conversion on value", "rd4572"))
+                                                                          "Invalid Integer Conversion on value",
+                                                                          "rd4572"))
 
     """
         checks positive and negative integers are converted correctly from strings to floats
@@ -69,11 +74,13 @@ class ExceptionUtilsTests(unittest.TestCase):
     """
     def test_convert_to_float_with_string(self):
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
-                                                                "Invalid Float Conversion on value", "str"))
+                                                                          "Invalid Float Conversion on value", "str"))
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
-                                                                "Invalid Float Conversion on value", "5we4r-3"))
+                                                                          "Invalid Float Conversion on value",
+                                                                          "5we4r-3"))
         self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
-                                                                "Invalid Float Conversion on value", "rd4572"))
+                                                                          "Invalid Float Conversion on value",
+                                                                          "rd4572"))
 
 
 if __name__ == '__main__':

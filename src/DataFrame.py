@@ -73,9 +73,9 @@ class DataFrame:
     def run_linear_regression(self, x_axis, y_axis):
         self.x_axis = self.headers[x_axis]
         self.y_axis = self.headers[y_axis]
-        self.y_intercept = MathsUtil.estimate_y_intercept(self.data[self.x_axis], self.data[self.y_axis])
-        self.slope = MathsUtil.estimate_slope(self.data[self.x_axis], self.data[self.y_axis], self.y_intercept)
-        self.predicted_y = MathsUtil.num_plus_arr(self.slope, MathsUtil.num_by_arr(self.y_intercept, self.data[self.x_axis]))
+        self.slope = MathsUtil.estimate_slope(self.data[self.x_axis], self.data[self.y_axis])
+        self.y_intercept = MathsUtil.estimate_y_intercept(self.data[self.x_axis], self.data[self.y_axis], self.slope)
+        self.predicted_y = MathsUtil.num_plus_arr(self.y_intercept, MathsUtil.num_by_arr(self.slope, self.data[self.x_axis]))
 
     """
         prints the data from the linear regression to the console

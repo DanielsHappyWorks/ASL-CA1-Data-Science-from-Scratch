@@ -1,4 +1,4 @@
-import constant
+import src.constant as constant
 
 
 class TextUtils:

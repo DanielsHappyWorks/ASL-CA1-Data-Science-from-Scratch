@@ -1,5 +1,5 @@
 import matplotlib.pyplot as pyplot
-import constant
+import src.constant as constant
 
 
 class GraphUtils:

@@ -31,11 +31,14 @@ class MathsUtil:
         :param arr2
             second list for multiplication
         :return
-            returns new list with the multiplied values
+            returns new list with the multiplied values, or empty list if array size isn't the same
     """
     @staticmethod
     def arr_by_arr(arr1, arr2):
         new_arr = []
+        if not len(arr1) == len(arr2):
+            return new_arr
+
         for i, item in enumerate(arr1):
             new_arr.append(item * arr2[i])
         return new_arr
@@ -82,7 +85,7 @@ class MathsUtil:
             returns the y intercept of a line for lr
     """
     @staticmethod
-    def estimate_y_intercept(x, y):
+    def estimate_slope(x, y):
         length_x = len(x)
         mean_x = MathsUtil.arr_mean(x)
         mean_y = MathsUtil.arr_mean(y)
@@ -104,7 +107,7 @@ class MathsUtil:
             returns the slope of a line for lr
     """
     @staticmethod
-    def estimate_slope(x, y, y_intercept):
+    def estimate_y_intercept(x, y, y_intercept):
         mean_x = MathsUtil.arr_mean(x)
         mean_y = MathsUtil.arr_mean(y)
 

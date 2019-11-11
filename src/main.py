@@ -129,8 +129,10 @@ def run_regression(data_frame):
 """
 def get_valid_axis(text, data_frame):
     while True:
-        axis = ExceptionUtils.select_int(text, 0, len(data_frame.headers))
-        if TextUtils.checks_int(data_frame.data_types[axis]):
+        axis = ExceptionUtils.select_int(text, 0, len(data_frame.headers)-1)
+        if len(data_frame.data_types) == 0:
+            return axis
+        elif TextUtils.checks_int(data_frame.data_types[axis]):
             return axis
         print(f"Invalid Selection {axis}, Please select column of type Integer")
 
