@@ -1,8 +1,6 @@
+from src.Utils.ExceptionUtils import ExceptionUtils
+from src.tests.TestHelpers.StdInOutHelper import StdInOutHelper
 import unittest
-from unittest import mock
-import io
-import sys
-from Utils.ExceptionUtils import ExceptionUtils
 
 
 class ExceptionUtilsTests(unittest.TestCase):
@@ -10,11 +8,11 @@ class ExceptionUtilsTests(unittest.TestCase):
         Tests all of the edge cases for selecting out of a range get returned properly
     """
     def test_select_int_test_valid(self):
-        self.mock_input('1')
+        StdInOutHelper.mock_input('1')
         self.assertEqual(ExceptionUtils.select_int("Input Question", 1, 10), 1)
-        self.mock_input('5')
+        StdInOutHelper.mock_input('5')
         self.assertEqual(ExceptionUtils.select_int("Input Question", 1, 10), 5)
-        self.mock_input('10')
+        StdInOutHelper.mock_input('10')
         self.assertEqual(ExceptionUtils.select_int("Input Question", 1, 10), 10)
 
     """
@@ -30,11 +28,11 @@ class ExceptionUtilsTests(unittest.TestCase):
         so the program can handle incorrect conversions gracefully
     """
     def test_convert_to_int_with_float_as_string(self):
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
                                                                 "Invalid Integer Conversion on value", "12.0"))
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
                                                                 "Invalid Integer Conversion on value", "0.12"))
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
                                                                 "Invalid Integer Conversion on value", "-54.26"))
 
     """
@@ -42,11 +40,11 @@ class ExceptionUtilsTests(unittest.TestCase):
         so the program can handle incorrect conversions gracefully
     """
     def test_convert_to_int_with_string(self):
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
                                                                 "Invalid Integer Conversion on value", "str"))
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
                                                                 "Invalid Integer Conversion on value", "5we4r-3"))
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_int,
                                                                 "Invalid Integer Conversion on value", "rd4572"))
 
     """
@@ -70,46 +68,12 @@ class ExceptionUtilsTests(unittest.TestCase):
         so the program can handle incorrect conversions gracefully
     """
     def test_convert_to_float_with_string(self):
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
                                                                 "Invalid Float Conversion on value", "str"))
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
                                                                 "Invalid Float Conversion on value", "5we4r-3"))
-        self.assertFalse(self.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
+        self.assertFalse(StdInOutHelper.assert_contains_stdout_and_return(ExceptionUtils.convert_to_float,
                                                                 "Invalid Float Conversion on value", "rd4572"))
-
-    """
-        Redirects stdout (print statements) to a variable, runs a function and Redirects stdout back to normal.
-        Then evaluates the stdout against expected output by checking if actual contains expected and returns function output
-        :param func
-            function to be run between output redirection
-        :param param
-            parameter passed into the function
-        :param expected
-            string to evaluate stdout against
-        :return output 
-            returns the output from the function
-    """
-    def assert_contains_stdout_and_return(self, func, expected, param1=None, param2=None, param3=None):
-        actual = io.StringIO()
-        sys.stdout = actual
-        if param3:
-            output = func(param1, param2, param3)
-        elif param2:
-            output = func(param1, param2)
-        elif param1:
-            output = func(param1)
-        else:
-            output = func(param1)
-        sys.stdout = sys.__stdout__
-        print(f"{expected}: {actual.getvalue()}")
-        self.assertTrue(expected in actual.getvalue())
-        return output
-
-    """
-        Mocks the next stdin input
-    """
-    def mock_input(self, user_input):
-        mock.builtins.input = lambda _: user_input
 
 
 if __name__ == '__main__':

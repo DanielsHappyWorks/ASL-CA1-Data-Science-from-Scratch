@@ -1,7 +1,7 @@
-from DataFrame import DataFrame
-from Utils.TextUtils import TextUtils
-from Utils.ExceptionUtils import ExceptionUtils
-import constant
+from src.DataFrame import DataFrame
+from src.Utils.TextUtils import TextUtils
+from src.Utils.ExceptionUtils import ExceptionUtils
+import src.constant as constant
 
 """
     runs when the program is started

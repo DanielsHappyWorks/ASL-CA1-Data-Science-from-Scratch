@@ -1,10 +1,10 @@
-from Utils.TextUtils import TextUtils
-from Utils.ExceptionUtils import ExceptionUtils
-from Utils.GraphUtils import GraphUtils
-from Utils.MathsUtil import MathsUtil
+from src.Utils.TextUtils import TextUtils
+from src.Utils.ExceptionUtils import ExceptionUtils
+from src.Utils.GraphUtils import GraphUtils
+from src.Utils.MathsUtil import MathsUtil
+import src.constant as constant
 from datetime import datetime
 import os
-import constant
 
 
 class DataFrame:
