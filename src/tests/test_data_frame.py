@@ -1,5 +1,5 @@
 from src.data_frame import DataFrame
-from src.tests.TestHelpers.std_in_out_helper import StdInOutHelper
+from src.tests.test_helpers.std_in_out_helper import StdInOutHelper
 import unittest
 
 
@@ -80,7 +80,7 @@ class DataFrameTests(unittest.TestCase):
     """
     @staticmethod
     def load_csv_test_data_valid():
-        with open("./test.csv") as csv_data:
+        with open("./test_files/test.csv") as csv_data:
             headers = csv_data.readline().split(",")
             return DataFrame(headers, csv_data, ["int", "float", "int", "int"], ",")
 
@@ -89,7 +89,7 @@ class DataFrameTests(unittest.TestCase):
     """
     @staticmethod
     def load_csv_test_data_invalid():
-        with open("./test_invalid.csv") as csv_data:
+        with open("./test_files/test_invalid.csv") as csv_data:
             headers = csv_data.readline().split(",")
             return DataFrame(headers, csv_data, ["int", "float", "str", "int"], ",")
 

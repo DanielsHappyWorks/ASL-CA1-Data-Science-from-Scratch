@@ -1,5 +1,5 @@
 from src.utils.text_utils import TextUtils
-from src.tests.TestHelpers.std_in_out_helper import StdInOutHelper
+from src.tests.test_helpers.std_in_out_helper import StdInOutHelper
 import unittest
 
 
