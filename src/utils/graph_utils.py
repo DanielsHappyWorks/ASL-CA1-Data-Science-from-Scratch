@@ -123,8 +123,9 @@ class GraphUtils:
     """
     @staticmethod
     def draw_distribution_graph(column, mean, variance, standard_deviation):
-        graph.hist(column, bins=50, density=True, alpha=constant.SCATTER_ALPHA, color=constant.SCATTER_COLOUR)
+        column.sort()
+        graph.hist(column, bins=100, density=True, alpha=constant.SCATTER_ALPHA, color=constant.SCATTER_COLOUR)
         x = np.linspace(graph.xlim()[0], graph.xlim()[1], 100)
         p = norm.pdf(x, mean, standard_deviation)
-        graph.plot(x, p, 'k', linewidth=2, color=constant.PLOT_COLOUR)
+        graph.plot(x, p, linewidth=2, color=constant.PLOT_COLOUR)
         graph.title(f"Distribution: mean={mean:.2f}, var={variance:.2f} std={standard_deviation:.2f}")
