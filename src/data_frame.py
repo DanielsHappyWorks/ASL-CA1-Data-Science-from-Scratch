@@ -62,6 +62,53 @@ class DataFrame:
         return processed_row
 
     """
+        The function prints the mean, variance and standard deviation to screen
+        :param column
+            The id of the column in the data set
+    """
+    def print_deviation_calculations(self, column):
+        mean = MathsUtil.arr_mean(self.data[self.headers[column]])
+        variance = MathsUtil.arr_variance(self.data[self.headers[column]])
+        standard_deviation = MathsUtil.arr_standard_deviation(self.data[self.headers[column]])
+        print(f"The Standard Deviation is {standard_deviation}, The Variance is {variance} and the Mean in {mean}")
+
+    """
+        The function plots a normal distribution and displays it on the screen
+        :param column
+            The id of the column in the data set
+    """
+    def plot_normal_distribution(self, column):
+        mean = MathsUtil.arr_mean(self.data[self.headers[column]])
+        variance = MathsUtil.arr_variance(self.data[self.headers[column]])
+        standard_deviation = MathsUtil.arr_standard_deviation(self.data[self.headers[column]])
+        GraphUtils.show_distribution_graph(self.data[self.headers[column]], mean, variance, standard_deviation)
+
+    """
+        exports the data from the distribution to a directory
+        :param column
+            column to be exported
+        :param date
+            uses the specified directory to output files to
+    """
+    def export_normal_distribution(self, column, date=datetime.now().strftime(constant.DATE_FOTMAT)):
+        path = DataFrame.get_export_path(date)
+        mean = MathsUtil.arr_mean(self.data[self.headers[column]])
+        variance = MathsUtil.arr_variance(self.data[self.headers[column]])
+        standard_deviation = MathsUtil.arr_standard_deviation(self.data[self.headers[column]])
+        GraphUtils.export_distribution_graph(self.data[self.headers[column]], self.headers[column], mean, variance,
+                                             standard_deviation, path)
+
+    """
+        exports the data from the distribution to a directory for all columns
+    """
+    def export_all_normal_distribution(self):
+        date = datetime.now().strftime(constant.DATE_FOTMAT)
+        for i, header in enumerate(self.headers):
+            if len(self.data_types) == 0 or not TextUtils.checks_str(self.data_types[i]):
+                self.export_normal_distribution(i, date)
+                print(f"exported dist_{header}")
+
+    """
         Runs the linear regression algorithm on 2 columns in the data set
         :param x_axis
             index of the column to be plotted against x
@@ -88,18 +135,18 @@ class DataFrame:
 
     """
         exports the data from the linear regression to a directory
-        :param dir_name
+        :param date
             uses the specified directory to output files to
     """
     def export_linear_regression_output(self, date=datetime.now().strftime(constant.DATE_FOTMAT)):
-        path = f"./output/{date}/"
+        path = DataFrame.get_export_path(date)
         try:
             if not os.path.exists(path):
                 os.makedirs(path)
         except Exception as ex:
             print(f"Could't make path {path} Exception: {ex}")
 
-        GraphUtils.export_graph(self.data, self.x_axis, self.y_axis, self.predicted_y, path)
+        GraphUtils.export_linear_regression_graph(self.data, self.x_axis, self.y_axis, self.predicted_y, path)
         self.export_predicted_y_to_csv(path)
         self.export_predicted_line_data(path)
 
@@ -138,7 +185,7 @@ class DataFrame:
         displays the output of the linear regression run on screen
     """
     def plot_linear_regression_output(self):
-        GraphUtils.show_graph(self.data, self.x_axis, self.y_axis, self.predicted_y)
+        GraphUtils.show_linear_regression_graph(self.data, self.x_axis, self.y_axis, self.predicted_y)
 
     """
         export all combinations of Linear Regression in one go
@@ -147,10 +194,10 @@ class DataFrame:
         date = datetime.now().strftime(constant.DATE_FOTMAT)
         for i, header1 in enumerate(self.headers):
             for j, header2 in enumerate(self.headers):
-                if len(self.data_types) == 0 or (not TextUtils.checks_str(self.data_types[i]) and not TextUtils.checks_str(self.data_types[j])):
+                if not header1 == header2 and (len(self.data_types) == 0 or (not TextUtils.checks_str(self.data_types[i]) and not TextUtils.checks_str(self.data_types[j]))):
                     self.run_linear_regression(i, j)
                     self.export_linear_regression_output(date)
-                    print(f"exported {header1}_{header2}")
+                    print(f"exported lr_{header1}_{header2}")
 
     """
         Prints the headings and defined data types for the data frame
@@ -164,3 +211,22 @@ class DataFrame:
                 print(f"header {i}: {header} - Errors data_types")
             else:
                 print(f"header {i}: {header} - {self.data_types[i]}")
+
+    """
+        Sets the export path and tries to create the directory if not exists
+        :param date
+            date to use as part of the path name
+        :return path 
+            as string
+    """
+    @staticmethod
+    def get_export_path(date):
+        path = f"./output/{date}/"
+
+        try:
+            if not os.path.exists(path):
+                os.makedirs(path)
+        except Exception as ex:
+            print(f"Could't make path {path} Exception: {ex}")
+
+        return path

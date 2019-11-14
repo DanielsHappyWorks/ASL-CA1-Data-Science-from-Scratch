@@ -85,23 +85,37 @@ def define_data_types(data_types, headers):
 def use_data_frame(data_frame):
     while True:
         TextUtils.print_menu(constant.MENU_USE_DATA_SET)
-        selection = ExceptionUtils.select_int(constant.MENU_USE_DATA_SET_INPUT, 1, 7)
+        selection = ExceptionUtils.select_int(constant.MENU_USE_DATA_SET_INPUT, 1, 11)
         if selection == 1:
             TextUtils.print_dict(data_frame.data)
         elif selection == 2:
             data_frame.print_headings_with_type()
         elif selection == 3:
+            data_frame.print_headings_with_type()
+            column = get_valid_axis(constant.GET_COLUMN, data_frame)
+            data_frame.print_deviation_calculations(column)
+        elif selection == 4:
+            data_frame.print_headings_with_type()
+            column = get_valid_axis(constant.GET_COLUMN, data_frame)
+            data_frame.plot_normal_distribution(column)
+        elif selection == 5:
+            data_frame.print_headings_with_type()
+            column = get_valid_axis(constant.GET_COLUMN, data_frame)
+            data_frame.export_normal_distribution(column)
+        elif selection == 6:
+            data_frame.export_all_normal_distribution()
+        elif selection == 7:
             run_regression(data_frame)
             data_frame.print_linear_regression_output()
-        elif selection == 4:
+        elif selection == 8:
             run_regression(data_frame)
             data_frame.export_linear_regression_output()
-        elif selection == 5:
+        elif selection == 9:
             run_regression(data_frame)
             data_frame.plot_linear_regression_output()
-        elif selection == 6:
+        elif selection == 10:
             data_frame.export_linear_regression_output_all()
-        elif selection == 7:
+        elif selection == 11:
             break
 
 
@@ -132,7 +146,7 @@ def get_valid_axis(text, data_frame):
         axis = ExceptionUtils.select_int(text, 0, len(data_frame.headers)-1)
         if len(data_frame.data_types) == 0:
             return axis
-        elif TextUtils.checks_int(data_frame.data_types[axis]):
+        elif TextUtils.checks_int(data_frame.data_types[axis]) or TextUtils.checks_float(data_frame.data_types[axis]):
             return axis
         print(f"Invalid Selection {axis}, Please select column of type Integer")
 

@@ -31,6 +31,14 @@ class DataFrameTests(unittest.TestCase):
         self.assertEqual(data_frame.y_intercept, 0)
         self.assertEqual(data_frame.predicted_y, [1, 2])
 
+    """
+        Tests the mean, variance and std dev is printed correctly
+    """
+    def test_print_mean_variance_and_std_deviation(self):
+        data_frame = DataFrameTests.load_csv_test_data_valid()
+        print_out = StdInOutHelper.get_std_output_when_running_function(data_frame.print_deviation_calculations, 1)
+        expected_out = "The Standard Deviation is 19.295345293619395, The Variance is 372.3103500000001 and the Mean in 29.840000000000003\n"
+        self.assertEqual(print_out, expected_out)
 
     """
         Tests the data from linear regression is printed correctly

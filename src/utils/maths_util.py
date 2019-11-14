@@ -76,6 +76,30 @@ class MathsUtil:
         return new_arr
 
     """
+        gets the squared root of a number (good approximation)
+    """
+    @staticmethod
+    def num_sqrt(num):
+        return num ** .5
+
+    """
+        Gets the variance of an array
+    """
+    @staticmethod
+    def arr_variance(arr):
+        mean = MathsUtil.arr_mean(arr)
+        squared_difference = MathsUtil.arr_by_arr(MathsUtil.num_plus_arr(-mean, arr), MathsUtil.num_plus_arr(-mean, arr))
+        return MathsUtil.arr_mean(squared_difference)
+
+    """
+        Gets the standard deviation of an array
+    """
+    @staticmethod
+    def arr_standard_deviation(arr):
+        variance = MathsUtil.arr_variance(arr)
+        return MathsUtil.num_sqrt(variance)
+
+    """
         estimates the y intercept based on 2 arrays of the same size for Linear Regression (lr)
         :param x
             list of x values to calculate lr y intercept

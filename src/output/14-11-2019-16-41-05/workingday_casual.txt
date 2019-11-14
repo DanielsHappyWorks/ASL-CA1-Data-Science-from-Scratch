@@ -1,0 +1,1 @@
+Formula: Y = -31.88010704392496 * X + 57.44142183532824, slope of the line: -31.88010704392496, Y Intercept of the Line 57.44142183532824

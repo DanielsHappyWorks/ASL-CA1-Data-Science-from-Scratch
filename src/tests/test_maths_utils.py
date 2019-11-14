@@ -53,6 +53,27 @@ class MathsUtilsTests(unittest.TestCase):
         self.assertEqual(MathsUtil.num_plus_arr(2.5, [1.5, 2.4, 3.05]), [4, 4.9, 5.55])
 
     """
+        Tests the square root of a number is calculated correctly
+    """
+    def test_num_sqrt(self):
+        self.assertEqual(MathsUtil.num_sqrt(25), 5)
+        self.assertEqual(MathsUtil.num_sqrt(100), 10)
+        self.assertEqual(MathsUtil.num_sqrt(9), 3)
+
+    """
+        Test that the variance given a list is correct
+    """
+    def test_arr_variance(self):
+        self.assertEqual(MathsUtil.arr_variance([1, 2, 3, 4]), 1.25)
+        self.assertEqual(MathsUtil.arr_variance([-10, 1, 2, 3, 4]), 26)
+
+    """
+        Test that the standard deviation given a list is correct
+    """
+    def test_arr_standard_deviation(self):
+        self.assertEqual(MathsUtil.arr_standard_deviation([3, 9]), 3)
+
+    """
         Test that the slope of a line of best fit for a list of x,y values is calculated correctly.
     """
     def test_estimate_slope(self):
