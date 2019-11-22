@@ -9,7 +9,7 @@ DEFAULT_DATA_SET_DATA_TYPES = ['int', 'str', 'int', 'int', 'int', 'int', 'int', 
                                'int', 'float', 'float', 'float', 'float', 'int', 'int', 'int']
 MENU_USE_DATA_SET = ['1) print data set',
                      '2) print header details',
-                     '3) print mean, variance, and standard deviation for 1 column',
+                     '3) print average, variance, and standard deviation for 1 column',
                      '4) plot normal distribution on 1 column',
                      '5) export normal distribution on 1 column',
                      '6) export all normal distribution graphs and calculations',
@@ -42,6 +42,12 @@ SCATTER_LABEL = "points"
 SCATTER_ALPHA = 0.2
 PLOT_COLOUR = "#9370DB"
 PLOT_LABEL = "line"
+DISTRIBUTION_MEAN_COLOUR = "#9370DB"
+DISTRIBUTION_MEAN_LINE_STYLE = "dashed"
+DISTRIBUTION_MEDIAN_COLOUR = "#db9370"
+DISTRIBUTION_MEDIAN_LINE_STYLE = "dashdot"
+DISTRIBUTION_MODE_COLOUR = "#b8db70"
+DISTRIBUTION_MODE_LINE_STYLE = "dotted"
 
 # data_frame.py
 DATE_FOTMAT = '%d-%m-%Y-%H-%M-%S'

@@ -17,11 +17,10 @@ class DataFrameTests(unittest.TestCase):
         self.assertEqual(print_out, expected_out)
 
     """
-        Tests that invaild rows will be dropped from the data frame and linear regression is still possible
+        Tests that invalid rows will be dropped from the data frame and linear regression is still possible
     """
     def test_invalid_rows_get_dropped_from_data_frame(self):
         data_frame = DataFrameTests.load_csv_test_data_invalid()
-        print((data_frame.data))
         self.assertEqual(len(data_frame.data["A"]), 2)
         self.assertEqual(len(data_frame.data["B"]), 2)
         self.assertEqual(len(data_frame.data["C"]), 2)
@@ -37,7 +36,9 @@ class DataFrameTests(unittest.TestCase):
     def test_print_mean_variance_and_std_deviation(self):
         data_frame = DataFrameTests.load_csv_test_data_valid()
         print_out = StdInOutHelper.get_std_output_when_running_function(data_frame.print_deviation_calculations, 1)
-        expected_out = "The Standard Deviation is 19.295345293619395, The Variance is 372.3103500000001 and the Mean in 29.840000000000003\n"
+        expected_out = "For Mean: The Standard Deviation is 19.30, The Variance is 372.31 and the Mean in 29.84\n" \
+                       "For Median: The Standard Deviation is 19.30, The Variance is 372.64 and the Median in 30.41" \
+                       "\nFor Mode: The Standard Deviation is 32.61, The Variance is 1063.47 and the Mode in 56.13\n"
         self.assertEqual(print_out, expected_out)
 
     """

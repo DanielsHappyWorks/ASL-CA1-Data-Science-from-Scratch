@@ -1,5 +1,6 @@
 import matplotlib.pyplot as graph
 import src.constant as constant
+from src.utils.maths_util import MathsUtil
 import numpy as np
 from scipy.stats import norm
 
@@ -35,10 +36,10 @@ class GraphUtils:
             standard_deviation of the values used in heading and for plot of distribution line
     """
     @staticmethod
-    def show_distribution_graph(column, mean, variance, standard_deviation):
+    def show_distribution_graph(column, mean, median, mode):
         print(column)
         graph.clf()
-        GraphUtils.show_distribution_graph(column, mean, variance, standard_deviation)
+        GraphUtils.draw_distribution_graph(column, mean, median, mode)
         graph.show()
 
     """
@@ -66,7 +67,7 @@ class GraphUtils:
 
     """
         exports the distribution graph to a file
-        :param column
+        :param values
             array of values to be plotted on the histogram
         :param header
             used to name the file
@@ -80,9 +81,9 @@ class GraphUtils:
             path for where to output the file, should already exist
     """
     @staticmethod
-    def export_distribution_graph(column, header, mean, variance, standard_deviation, path):
+    def export_distribution_graph(values, header, mean, median, mode, path):
         graph.clf()
-        GraphUtils.draw_distribution_graph(column, mean, variance, standard_deviation)
+        GraphUtils.draw_distribution_graph(values, mean, median, mode)
 
         try:
             graph.savefig(f"{path}dist_{header}.png")
@@ -122,10 +123,30 @@ class GraphUtils:
             standard_deviation of the values used in heading and for plot of distribution line
     """
     @staticmethod
-    def draw_distribution_graph(column, mean, variance, standard_deviation):
+    def draw_distribution_graph(column, mean, median, mode):
         column.sort()
         graph.hist(column, bins=100, density=True, alpha=constant.SCATTER_ALPHA, color=constant.SCATTER_COLOUR)
         x = np.linspace(graph.xlim()[0], graph.xlim()[1], 100)
-        p = norm.pdf(x, mean, standard_deviation)
-        graph.plot(x, p, linewidth=2, color=constant.PLOT_COLOUR)
-        graph.title(f"Distribution: mean={mean:.2f}, var={variance:.2f} std={standard_deviation:.2f}")
+
+        # distributions
+        p = norm.pdf(x, mean, MathsUtil.arr_standard_deviation(column, mean))
+        graph.plot(x, p, color=constant.DISTRIBUTION_MEAN_COLOUR)
+        p = norm.pdf(x, median, MathsUtil.arr_standard_deviation(column, median))
+        graph.plot(x, p, color=constant.DISTRIBUTION_MEDIAN_COLOUR)
+        p = norm.pdf(x, mode, MathsUtil.arr_standard_deviation(column, mode))
+        graph.plot(x, p, color=constant.DISTRIBUTION_MODE_COLOUR)
+
+        # averages
+        graph.axvline(mean, color=constant.DISTRIBUTION_MEAN_COLOUR,
+                      linestyle=constant.DISTRIBUTION_MEAN_LINE_STYLE)
+        graph.axvline(median, color=constant.DISTRIBUTION_MEDIAN_COLOUR,
+                      linestyle=constant.DISTRIBUTION_MEDIAN_LINE_STYLE)
+        graph.axvline(mode, color=constant.DISTRIBUTION_MODE_COLOUR,
+                      linestyle=constant.DISTRIBUTION_MODE_LINE_STYLE)
+
+        # title
+        graph.legend({"Mean": mean, "Median": median, "Mode": mode})
+        mean_title = f"mean={mean:.2f}, variance={MathsUtil.arr_variance(column, mean):.2f} std={MathsUtil.arr_standard_deviation(column, mean):.2f}"
+        median_title = f"median={median:.2f}, variance={MathsUtil.arr_variance(column, median):.2f} std={MathsUtil.arr_standard_deviation(column, median):.2f}"
+        mode_title = f"mode={mode:.2f}, variance={MathsUtil.arr_variance(column, mode):.2f} std={MathsUtil.arr_standard_deviation(column, mode):.2f}"
+        graph.title(f"Distribution: {mean_title}\n{median_title}\n{mode_title}")

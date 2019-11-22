@@ -11,6 +11,34 @@ class MathsUtil:
         return MathsUtil.arr_sum(arr) / len(arr)
 
     """
+        gets the median average of a list
+        :param arr
+            array of integer/float values used to get the mean average
+        :returns float
+            the average of all values in the list
+    """
+    @staticmethod
+    def arr_median(arr):
+        sorted_arr = sorted(arr)
+        index_at_middle = (len(arr) - 1) // 2
+
+        if len(arr) % 2:
+            return sorted_arr[index_at_middle]
+        else:
+            return (sorted_arr[index_at_middle] + sorted_arr[index_at_middle + 1]) / 2.0
+
+    """
+        gets the median average of a list
+        :param arr
+            array of integer/float values used to get the mean average
+        :returns float
+            the average of all values in the list
+    """
+    @staticmethod
+    def arr_mode(arr):
+        return max(set(arr), key=arr.count)
+
+    """
         gets the sun of all the values in a list
         :param arr
             array of integer/float values used to get the sum
@@ -86,17 +114,17 @@ class MathsUtil:
         Gets the variance of an array
     """
     @staticmethod
-    def arr_variance(arr):
-        mean = MathsUtil.arr_mean(arr)
-        squared_difference = MathsUtil.arr_by_arr(MathsUtil.num_plus_arr(-mean, arr), MathsUtil.num_plus_arr(-mean, arr))
+    def arr_variance(arr, average):
+        squared_difference = MathsUtil.arr_by_arr(MathsUtil.num_plus_arr(-average, arr),
+                                                  MathsUtil.num_plus_arr(-average, arr))
         return MathsUtil.arr_mean(squared_difference)
 
     """
         Gets the standard deviation of an array
     """
     @staticmethod
-    def arr_standard_deviation(arr):
-        variance = MathsUtil.arr_variance(arr)
+    def arr_standard_deviation(arr, average):
+        variance = MathsUtil.arr_variance(arr, average)
         return MathsUtil.num_sqrt(variance)
 
     """

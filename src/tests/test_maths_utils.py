@@ -4,7 +4,7 @@ import unittest
 
 class MathsUtilsTests(unittest.TestCase):
     """
-        Tests that the list is added correctly with positive, negative anf floating point numbers
+        Tests that the list is added correctly with positive, negative and floating point numbers
     """
     def test_sum_of_array(self):
         self.assertEqual(MathsUtil.arr_sum([1, 2, 3]), 6)
@@ -64,14 +64,14 @@ class MathsUtilsTests(unittest.TestCase):
         Test that the variance given a list is correct
     """
     def test_arr_variance(self):
-        self.assertEqual(MathsUtil.arr_variance([1, 2, 3, 4]), 1.25)
-        self.assertEqual(MathsUtil.arr_variance([-10, 1, 2, 3, 4]), 26)
+        self.assertEqual(MathsUtil.arr_variance([1, 2, 3, 4], MathsUtil.arr_mean([1, 2, 3, 4])), 1.25)
+        self.assertEqual(MathsUtil.arr_variance([-10, 1, 2, 3, 4], MathsUtil.arr_mean([-10, 1, 2, 3, 4])), 26)
 
     """
         Test that the standard deviation given a list is correct
     """
     def test_arr_standard_deviation(self):
-        self.assertEqual(MathsUtil.arr_standard_deviation([3, 9]), 3)
+        self.assertEqual(MathsUtil.arr_standard_deviation([3, 9], MathsUtil.arr_mean([3, 9])), 3)
 
     """
         Test that the slope of a line of best fit for a list of x,y values is calculated correctly.

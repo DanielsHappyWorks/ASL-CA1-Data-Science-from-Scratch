@@ -62,15 +62,30 @@ class DataFrame:
         return processed_row
 
     """
-        The function prints the mean, variance and standard deviation to screen
+        The function prints the average, variance and standard deviation for mean, median and mode to screen
         :param column
             The id of the column in the data set
     """
     def print_deviation_calculations(self, column):
-        mean = MathsUtil.arr_mean(self.data[self.headers[column]])
-        variance = MathsUtil.arr_variance(self.data[self.headers[column]])
-        standard_deviation = MathsUtil.arr_standard_deviation(self.data[self.headers[column]])
-        print(f"The Standard Deviation is {standard_deviation}, The Variance is {variance} and the Mean in {mean}")
+        rows = self.data[self.headers[column]]
+        DataFrame.print_deviation_calculation("Mean", rows, MathsUtil.arr_mean(rows))
+        DataFrame.print_deviation_calculation("Median", rows, MathsUtil.arr_median(rows))
+        DataFrame.print_deviation_calculation("Mode", rows, MathsUtil.arr_mode(rows))
+
+    """
+        The function prints the average, variance and standard deviation for mean, median and mode to screen
+        :param type
+            String defining the type of average
+        :param rows
+            rows used to calculate variance and std
+        :param average
+            the value of the average for the set of rows
+    """
+    @staticmethod
+    def print_deviation_calculation(type, rows, average):
+        variance = MathsUtil.arr_variance(rows, average)
+        standard_deviation = MathsUtil.arr_standard_deviation(rows, average)
+        print(f"For {type}: The Standard Deviation is {standard_deviation:.2f}, The Variance is {variance:.2f} and the {type} in {average:.2f}")
 
     """
         The function plots a normal distribution and displays it on the screen
@@ -79,9 +94,9 @@ class DataFrame:
     """
     def plot_normal_distribution(self, column):
         mean = MathsUtil.arr_mean(self.data[self.headers[column]])
-        variance = MathsUtil.arr_variance(self.data[self.headers[column]])
-        standard_deviation = MathsUtil.arr_standard_deviation(self.data[self.headers[column]])
-        GraphUtils.show_distribution_graph(self.data[self.headers[column]], mean, variance, standard_deviation)
+        median = MathsUtil.arr_median(self.data[self.headers[column]])
+        mode = MathsUtil.arr_mode(self.data[self.headers[column]])
+        GraphUtils.show_distribution_graph(self.data[self.headers[column]], mean, median, mode)
 
     """
         exports the data from the distribution to a directory
@@ -93,10 +108,10 @@ class DataFrame:
     def export_normal_distribution(self, column, date=datetime.now().strftime(constant.DATE_FOTMAT)):
         path = DataFrame.get_export_path(date)
         mean = MathsUtil.arr_mean(self.data[self.headers[column]])
-        variance = MathsUtil.arr_variance(self.data[self.headers[column]])
-        standard_deviation = MathsUtil.arr_standard_deviation(self.data[self.headers[column]])
-        GraphUtils.export_distribution_graph(self.data[self.headers[column]], self.headers[column], mean, variance,
-                                             standard_deviation, path)
+        median = MathsUtil.arr_median(self.data[self.headers[column]])
+        mode = MathsUtil.arr_mode(self.data[self.headers[column]])
+        GraphUtils.export_distribution_graph(self.data[self.headers[column]], self.headers[column],
+                                             mean, median, mode, path)
 
     """
         exports the data from the distribution to a directory for all columns
