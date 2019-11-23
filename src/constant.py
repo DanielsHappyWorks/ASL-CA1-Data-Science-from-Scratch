@@ -18,7 +18,7 @@ MENU_USE_DATA_SET = ['1) print data set',
                      '9) run linear regression on 2 columns and plot output',
                      '10) run linear regression on all columns and export (takes time)',
                      '11) Back:']
-MENU_USE_DATA_SET_INPUT = "Please select an option (1-7):"
+MENU_USE_DATA_SET_INPUT = "Please select an option (1-11):"
 ENTER_PATH = "Please enter the path to the file:"
 ENTER_DELIMITER = "Please enter the delimiter to split the file i.e ',':"
 ARE_ALL_INTEGERS = "Are all of the columns integer values? (y/n)"

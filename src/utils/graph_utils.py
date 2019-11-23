@@ -36,10 +36,9 @@ class GraphUtils:
             standard_deviation of the values used in heading and for plot of distribution line
     """
     @staticmethod
-    def show_distribution_graph(column, mean, median, mode):
-        print(column)
+    def show_distribution_graph(column, name, mean, median, mode):
         graph.clf()
-        GraphUtils.draw_distribution_graph(column, mean, median, mode)
+        GraphUtils.draw_distribution_graph(column, name, mean, median, mode)
         graph.show()
 
     """
@@ -83,7 +82,7 @@ class GraphUtils:
     @staticmethod
     def export_distribution_graph(values, header, mean, median, mode, path):
         graph.clf()
-        GraphUtils.draw_distribution_graph(values, mean, median, mode)
+        GraphUtils.draw_distribution_graph(values, header, mean, median, mode)
 
         try:
             graph.savefig(f"{path}dist_{header}.png")
@@ -123,10 +122,11 @@ class GraphUtils:
             standard_deviation of the values used in heading and for plot of distribution line
     """
     @staticmethod
-    def draw_distribution_graph(column, mean, median, mode):
+    def draw_distribution_graph(column, name, mean, median, mode):
         column.sort()
         graph.hist(column, bins=100, density=True, alpha=constant.SCATTER_ALPHA, color=constant.SCATTER_COLOUR)
         x = np.linspace(graph.xlim()[0], graph.xlim()[1], 100)
+        graph.xlabel(name)
 
         # distributions
         p = norm.pdf(x, mean, MathsUtil.arr_standard_deviation(column, mean))

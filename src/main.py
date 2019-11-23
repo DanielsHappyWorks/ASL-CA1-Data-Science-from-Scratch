@@ -148,7 +148,7 @@ def get_valid_axis(text, data_frame):
             return axis
         elif TextUtils.checks_int(data_frame.data_types[axis]) or TextUtils.checks_float(data_frame.data_types[axis]):
             return axis
-        print(f"Invalid Selection {axis}, Please select column of type Integer")
+        print(f"Invalid Selection {axis}, Please select column of type Integer/Float")
 
 
 """
