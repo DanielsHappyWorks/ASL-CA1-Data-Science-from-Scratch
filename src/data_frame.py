@@ -44,13 +44,17 @@ class DataFrame:
         processed_row = []
         if len(self.data_types) == 0:
             for value in row:
-                processed_row.append(int(value.strip()))
+                if not ExceptionUtils.convert_to_int(value.strip()) is None:
+                    processed_row.append(ExceptionUtils.convert_to_int(value.strip()))
+                else:
+                    print(f"could not convert a value in the row, dropping row as data type is incorrect: int, value {value.strip()}, row: {row}")
+                    return False
         elif len(self.headers) != len(self.data_types):
             print(f"The amount of data types does not match the amount of headers, dropping row {row}")
             return False
         else:
             for i, value in enumerate(row):
-                if TextUtils.checks_int(self.data_types[i]) and not bool(ExceptionUtils.convert_to_int(value.strip())) is None:
+                if TextUtils.checks_int(self.data_types[i]) and not ExceptionUtils.convert_to_int(value.strip()) is None:
                     processed_row.append(ExceptionUtils.convert_to_int(value.strip()))
                 elif TextUtils.checks_str(self.data_types[i]):
                     processed_row.append(value.strip())
@@ -105,13 +109,14 @@ class DataFrame:
         :param date
             uses the specified directory to output files to
     """
-    def export_normal_distribution(self, column, date=datetime.now().strftime(constant.DATE_FOTMAT)):
+    def export_normal_distribution(self, column, date):
         path = DataFrame.get_export_path(date)
         mean = MathsUtil.arr_mean(self.data[self.headers[column]])
         median = MathsUtil.arr_median(self.data[self.headers[column]])
         mode = MathsUtil.arr_mode(self.data[self.headers[column]])
         GraphUtils.export_distribution_graph(self.data[self.headers[column]], self.headers[column],
                                              mean, median, mode, path)
+        print(f"exported {path}dist_{self.headers[column]}")
 
     """
         exports the data from the distribution to a directory for all columns
@@ -121,7 +126,6 @@ class DataFrame:
         for i, header in enumerate(self.headers):
             if len(self.data_types) == 0 or not TextUtils.checks_str(self.data_types[i]):
                 self.export_normal_distribution(i, date)
-                print(f"exported dist_{header}")
 
     """
         Runs the linear regression algorithm on 2 columns in the data set
@@ -153,7 +157,7 @@ class DataFrame:
         :param date
             uses the specified directory to output files to
     """
-    def export_linear_regression_output(self, date=datetime.now().strftime(constant.DATE_FOTMAT)):
+    def export_linear_regression_output(self, date):
         path = DataFrame.get_export_path(date)
         try:
             if not os.path.exists(path):
@@ -164,6 +168,7 @@ class DataFrame:
         GraphUtils.export_linear_regression_graph(self.data, self.x_axis, self.y_axis, self.predicted_y, path)
         self.export_predicted_y_to_csv(path)
         self.export_predicted_line_data(path)
+        print(f"exported {path}lr_{self.x_axis}_{self.y_axis}")
 
     """
         exports the slope, y intercept and formula of the predicted line 
@@ -172,11 +177,11 @@ class DataFrame:
     """
     def export_predicted_line_data(self, path):
         try:
-            with open(f"{path}{self.x_axis}_{self.y_axis}.txt", "w") as file:
+            with open(f"{path}lr_{self.x_axis}_{self.y_axis}.txt", "w") as file:
                 file.write(
                     f"Formula: Y = {self.slope} * X + {self.y_intercept}, slope of the line: {self.slope}, Y Intercept of the Line {self.y_intercept}")
         except Exception as ex:
-            print(f"Could't export predicted y values to {path}{self.x_axis}_{self.y_axis}.txt Exception: {ex}")
+            print(f"Could't export predicted y values to {path}lr_{self.x_axis}_{self.y_axis}.txt Exception: {ex}")
 
     """
         exports the x, y and predicted y columns to a new csv file
@@ -185,7 +190,7 @@ class DataFrame:
     """
     def export_predicted_y_to_csv(self, path):
         try:
-            with open(f"{path}{self.x_axis}_{self.y_axis}.csv", "w") as file:
+            with open(f"{path}lr_{self.x_axis}_{self.y_axis}.csv", "w") as file:
                 data_to_print = dict()
                 data_to_print[self.x_axis] = self.data[self.x_axis]
                 data_to_print[self.y_axis] = self.data[self.y_axis]
@@ -194,7 +199,7 @@ class DataFrame:
                     file.write(','.join(row))
                     file.write('\n')
         except Exception as ex:
-            print(f"Could't export predicted y values to {path}{self.x_axis}_{self.y_axis}.csv Exception: {ex}")
+            print(f"Could't export predicted y values to {path}lr_{self.x_axis}_{self.y_axis}.csv Exception: {ex}")
 
     """
         displays the output of the linear regression run on screen
@@ -212,7 +217,6 @@ class DataFrame:
                 if not header1 == header2 and (len(self.data_types) == 0 or (not TextUtils.checks_str(self.data_types[i]) and not TextUtils.checks_str(self.data_types[j]))):
                     self.run_linear_regression(i, j)
                     self.export_linear_regression_output(date)
-                    print(f"exported lr_{header1}_{header2}")
 
     """
         Prints the headings and defined data types for the data frame

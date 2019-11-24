@@ -2,6 +2,7 @@ from src.data_frame import DataFrame
 from src.utils.text_utils import TextUtils
 from src.utils.exception_utils import ExceptionUtils
 import src.constant as constant
+from datetime import datetime
 
 """
     runs when the program is started
@@ -20,7 +21,7 @@ def main():
             path = input(constant.ENTER_PATH)
             delimiter = input(constant.ENTER_DELIMITER)
             print(f"Opening CSV {path}")
-            data_frame = create_data_frame(path, delimiter)
+            data_frame = create_data_frame(path, delimiter, [])
             if data_frame:
                 use_data_frame(data_frame)
         elif selection == 3:
@@ -37,7 +38,7 @@ def main():
         returns a DataFrame object with the loaded data set
         If an exception is thrown while loading the data set the returned value will be false
 """
-def create_data_frame(path, delimeter, data_types=[]):
+def create_data_frame(path, delimeter, data_types):
     try:
         with open(path) as csv_data:
             headers = csv_data.readline().split(delimeter)
@@ -66,7 +67,7 @@ def define_data_types(data_types, headers):
             elif TextUtils.checks_no(all_int):
                 for header in headers:
                     while True:
-                        header_type = input(f"what is the type of the column {header}? (int, float, string)")
+                        header_type = input(f"what is the type of the column {header.strip()}? (int, float, string)")
                         if TextUtils.checks_int(header_type) or TextUtils.checks_str(header_type) or TextUtils.checks_float(header_type):
                             data_types.append(header_type.lower())
                             break
@@ -101,7 +102,8 @@ def use_data_frame(data_frame):
         elif selection == 5:
             data_frame.print_headings_with_type()
             column = get_valid_axis(constant.GET_COLUMN, data_frame)
-            data_frame.export_normal_distribution(column)
+            date = datetime.now().strftime(constant.DATE_FOTMAT)
+            data_frame.export_normal_distribution(column, date)
         elif selection == 6:
             data_frame.export_all_normal_distribution()
         elif selection == 7:
@@ -109,7 +111,8 @@ def use_data_frame(data_frame):
             data_frame.print_linear_regression_output()
         elif selection == 8:
             run_regression(data_frame)
-            data_frame.export_linear_regression_output()
+            date = datetime.now().strftime(constant.DATE_FOTMAT)
+            data_frame.export_linear_regression_output(date)
         elif selection == 9:
             run_regression(data_frame)
             data_frame.plot_linear_regression_output()
